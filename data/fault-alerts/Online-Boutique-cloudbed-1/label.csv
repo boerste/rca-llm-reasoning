@@ -1,0 +1,71 @@
+fault_id,fault_level,fault_entity,fault_type,fault_st_time,fault_ed_time,fault_duration,fault_datetime
+0,service,cartservice,container network latency,1647736751,1647737291,540,2022-03-20 08:39:11
+1,service,adservice,container network latency,1647737329,1647737869,540,2022-03-20 08:48:49
+2,pod,shippingservice-1,container read I/O load,1647738546,1647739086,540,2022-03-20 09:09:06
+3,pod,emailservice-0,container read I/O load,1647741299,1647741839,540,2022-03-20 09:54:59
+4,node,node-1,node memory consumption,1647743133,1647743673,540,2022-03-20 10:25:33
+5,node,node-1,node memory consumption,1647744727,1647745267,540,2022-03-20 10:52:07
+6,pod,shippingservice-1,container memory load,1647746396,1647746936,540,2022-03-20 11:19:56
+7,service,recommendationservice,container network packet corruption,1647747326,1647747866,540,2022-03-20 11:35:26
+8,node,node-1,node disk read I/O consumption,1647749271,1647749811,540,2022-03-20 12:07:51
+9,service,recommendationservice,container CPU load,1647749457,1647749997,540,2022-03-20 12:10:57
+10,node,node-2,node disk write I/O consumption,1647753199,1647753739,540,2022-03-20 13:13:19
+11,node,node-4,node CPU load,1647754788,1647755328,540,2022-03-20 13:39:48
+12,node,node-6,node CPU load,1647755511,1647756051,540,2022-03-20 13:51:51
+13,pod,recommendationservice2-0,container process termination,1647756886,1647757426,540,2022-03-20 14:14:46
+14,service,shippingservice,container CPU load,1647757395,1647757935,540,2022-03-20 14:23:15
+15,service,shippingservice,container process termination,1647761243,1647761783,540,2022-03-20 15:27:23
+16,pod,shippingservice-1,container network packet retransmission,1647763803,1647764343,540,2022-03-20 16:10:03
+17,pod,currencyservice-0,container network packet corruption,1647765104,1647765644,540,2022-03-20 16:31:44
+18,node,node-4,node CPU spike,1647767561,1647768101,540,2022-03-20 17:12:41
+19,service,paymentservice,container process termination,1647768199,1647768739,540,2022-03-20 17:23:19
+20,node,node-5,node disk write I/O consumption,1647769222,1647769762,540,2022-03-20 17:40:22
+21,service,paymentservice,container memory load,1647770808,1647771348,540,2022-03-20 18:06:48
+22,service,emailservice,container network packet corruption,1647771846,1647772386,540,2022-03-20 18:24:06
+23,pod,frontend-2,container network packet retransmission,1647774333,1647774873,540,2022-03-20 19:05:33
+24,node,node-4,node disk read I/O consumption,1647776146,1647776686,540,2022-03-20 19:35:46
+25,pod,shippingservice2-0,container CPU load,1647778982,1647779522,540,2022-03-20 20:23:02
+26,service,emailservice,container packet loss,1647782181,1647782721,540,2022-03-20 21:16:21
+27,pod,cartservice-0,container memory load,1647783016,1647783556,540,2022-03-20 21:30:16
+28,node,node-1,node disk space consumption,1647784337,1647784877,540,2022-03-20 21:52:17
+29,pod,frontend-1,container network latency,1647784872,1647785412,540,2022-03-20 22:01:12
+30,node,node-3,node disk read I/O consumption,1647788164,1647788704,540,2022-03-20 22:56:04
+31,pod,checkoutservice-2,container memory load,1647788966,1647789506,540,2022-03-20 23:09:26
+32,service,productcatalogservice,container CPU load,1647790210,1647790750,540,2022-03-20 23:30:10
+33,service,cartservice,container network packet retransmission,1647794245,1647794785,540,2022-03-21 00:37:25
+34,pod,cartservice-0,container network packet retransmission,1647796005,1647796545,540,2022-03-21 01:06:45
+35,pod,productcatalogservice-2,container read I/O load,1647796830,1647797370,540,2022-03-21 01:20:30
+36,node,node-5,node disk read I/O consumption,1647798275,1647798815,540,2022-03-21 01:44:35
+37,node,node-5,node disk write I/O consumption,1647800098,1647800638,540,2022-03-21 02:14:58
+38,service,recommendationservice,container process termination,1647800799,1647801339,540,2022-03-21 02:26:39
+39,service,checkoutservice,container network packet corruption,1647803448,1647803988,540,2022-03-21 03:10:48
+40,node,node-6,node disk write I/O consumption,1647805154,1647805694,540,2022-03-21 03:39:14
+41,service,cartservice,container network packet retransmission,1647808364,1647808904,540,2022-03-21 04:32:44
+42,node,node-4,node memory consumption,1647810949,1647811489,540,2022-03-21 05:15:49
+43,pod,shippingservice2-0,container network packet corruption,1647812163,1647812703,540,2022-03-21 05:36:03
+44,pod,adservice2-0,container read I/O load,1647818816,1647819356,540,2022-03-21 07:26:56
+45,node,node-6,node disk read I/O consumption,1647819971,1647820511,540,2022-03-21 07:46:11
+46,pod,productcatalogservice-0,container CPU load,1647820502,1647821042,540,2022-03-21 07:55:02
+47,pod,shippingservice-1,container CPU load,1647821967,1647822507,540,2022-03-21 08:19:27
+48,node,node-1,node CPU load,1647823965,1647824505,540,2022-03-21 08:52:45
+49,service,productcatalogservice,container CPU load,1647824785,1647825325,540,2022-03-21 09:06:25
+50,service,checkoutservice,container memory load,1647825990,1647826530,540,2022-03-21 09:26:30
+51,service,shippingservice,container read I/O load,1647827637,1647828177,540,2022-03-21 09:53:57
+52,node,node-6,node CPU spike,1647828908,1647829448,540,2022-03-21 10:15:08
+53,node,node-4,node disk space consumption,1647830276,1647830816,540,2022-03-21 10:37:56
+54,node,node-6,node memory consumption,1647830692,1647831232,540,2022-03-21 10:44:52
+55,service,frontend,container memory load,1647834030,1647834570,540,2022-03-21 11:40:30
+56,service,productcatalogservice,container network latency,1647836321,1647836861,540,2022-03-21 12:18:41
+57,service,currencyservice,container memory load,1647841146,1647841686,540,2022-03-21 13:39:06
+58,service,emailservice,container read I/O load,1647842901,1647843441,540,2022-03-21 14:08:21
+59,service,emailservice,container write I/O load,1647843413,1647843953,540,2022-03-21 14:16:53
+60,service,adservice,container read I/O load,1647845943,1647846483,540,2022-03-21 14:59:03
+61,pod,frontend2-0,container network packet corruption,1647846519,1647847059,540,2022-03-21 15:08:39
+62,service,cartservice,container packet loss,1647848731,1647849271,540,2022-03-21 15:45:31
+63,pod,frontend-2,container read I/O load,1647850299,1647850839,540,2022-03-21 16:11:39
+64,node,node-5,node disk space consumption,1647852107,1647852647,540,2022-03-21 16:41:47
+65,node,node-3,node disk space consumption,1647865567,1647866107,540,2022-03-21 20:26:07
+66,node,node-2,node memory consumption,1647870740,1647871280,540,2022-03-21 21:52:20
+67,node,node-5,node disk write I/O consumption,1647871982,1647872522,540,2022-03-21 22:13:02
+68,node,node-4,node disk space consumption,1647875729,1647876269,540,2022-03-21 23:15:29
+69,node,node-4,node CPU load,1647877392,1647877932,540,2022-03-21 23:43:12

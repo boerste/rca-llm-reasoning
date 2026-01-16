@@ -1,0 +1,41 @@
+datasets:
+  - GAIA
+  - OpenRCA-Market
+
+models:
+  - llama3.2:3b
+  - qwen3:4b
+  - qwen3:32b
+  - llama3.3
+  - deepseek-r1:70b
+  - command-r-plus
+
+judge-models:
+  - qwen3:32b
+  - deepseek-r1:70b
+  - llama3.3
+
+openai-judge-model: gpt-5
+
+tasks-to-run:
+  - failure-classification
+
+tasks: # list of all tasks
+  - failure-classification
+
+prompts-dir: "code/config/prompts/effect-to-cause"
+
+data-directory: "results/v4/evaluation/llm-judge"
+samples-file: "llm_judge_samples.csv"
+results-directory: "results/v4/evaluation/llm-judge/scores/{judge_model}"
+scores-file: "llm_judge_scores_9.txt"
+
+log-file: "results/v4/execution/llm-judge-9.txt"
+
+write-results-freq: 3
+
+num-ctx: 40000
+max-new-tokens: -2
+
+openai-endpoint: "/v1/chat/completions"
+max-completion-tokens: 30000

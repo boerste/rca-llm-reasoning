@@ -1,0 +1,176 @@
+id,template,count
+45,"""POST /hipstershop.ProductCatalogService/GetProduct HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",504652
+63,"""- - -"" <:NUM:> - - - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""-"" ""-"" ""-"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:*:> <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - -",503807
+64,"""POST /hipstershop.ProductCatalogService/GetProduct HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",503795
+3,"""POST /api/traces HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""Go-http-client/<:NUM:>.<:NUM:>"" ""<:USERID:>"" ""jaeger-collector:<:NUM:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> jaeger-collector.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",264362
+1,"""POST /hipstershop.CurrencyService/Convert HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",244815
+10,"severity: info, message: conversion request successful",244462
+12,"severity: info, message: received conversion request",244462
+53,"""POST /hipstershop.CurrencyService/Convert HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> - default",244439
+6,[40m<:ANSI:>info<:ANSI:><:ANSI:><:ANSI:>: Microsoft.AspNetCore.Hosting.Diagnostics[<:NUM:>],212255
+5,[40m<:ANSI:>info<:ANSI:><:ANSI:><:ANSI:>: Microsoft.AspNetCore.Routing.EndpointMiddleware[<:NUM:>],212254
+65,"""POST /hipstershop.ProductCatalogService/ListProducts HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-python/<:NUM:>.<:NUM:>.<:NUM:> grpc-c/<:NUM:>.<:NUM:>.<:NUM:> (manylinux; chttp2)"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",117224
+24,"severity: debug, message: request started",110621
+18,"severity: debug, message: request complete",110618
+15,Request finished in <:DURATION:>ms <:NUM:> application/grpc,106128
+4,"""POST /hipstershop.CurrencyService/GetSupportedCurrencies HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",92950
+33,"""POST /hipstershop.CartService/GetCart HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",92897
+11,"severity: info, message: Getting supported currencies...",92881
+8,Executed endpoint 'gRPC - /hipstershop.CartService/GetCart',92877
+9,Executing endpoint 'gRPC - /hipstershop.CartService/GetCart',92876
+19,Request starting HTTP/<:HTTPVER:> POST http://<:SERVICE:><:PORT:>/hipstershop.CartService/GetCart application/grpc,92876
+21,etCartAsync called with userId=<:USERID:>,92876
+44,"""POST /hipstershop.CurrencyService/GetSupportedCurrencies HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> - default",92840
+46,"""POST /hipstershop.CartService/GetCart HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",92835
+17,"severity: INFO, message: [Recv ListRecommendations] product ids=<:ITEM:>",79402
+51,"""POST /hipstershop.RecommendationService/ListRecommendations HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> - default",79369
+42,"""POST /hipstershop.ProductCatalogService/ListProducts HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-python/<:NUM:>.<:NUM:>.<:NUM:> grpc-c/<:NUM:>.<:NUM:>.<:NUM:> (manylinux; chttp2)"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",79340
+41,"""POST /hipstershop.RecommendationService/ListRecommendations HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",79336
+49,"""POST /api/v2/spans HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""okhttp/<:NUM:>.<:NUM:>.<:NUM:>"" ""<:USERID:>"" ""jaeger-collector:<:NUM:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> jaeger-collector.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",66249
+47,"""POST /hipstershop.AdService/GetAds HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",66243
+55,"""POST /hipstershop.AdService/GetAds HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> - default",66039
+35,"severity: debug, message: serving product page",53152
+54,"""GET /product/<:PRODUCTID:> HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""k6/<:NUM:>.<:NUM:>.<:NUM:> (https://k6.io/)"" ""<:USERID:>"" ""frontend.ts<:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:*:> - default",53091
+56,"""POST /hipstershop.ShippingService/GetQuote HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",26401
+25,"severity: info, message: [GetQuote] received request",26387
+34,"severity: info, message: [GetQuote] completed request",26387
+2,"""POST /hipstershop.ShippingService/GetQuote HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",26383
+43,"""POST /api/traces?format=jaeger.thrift HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""Python/THttpClient <:*:> server.py)"" ""<:USERID:>"" ""jaeger-collector:<:NUM:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> jaeger-collector.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",25343
+57,"severity: debug, message: view user cart",22054
+52,"""GET /cart HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""k6/<:NUM:>.<:NUM:>.<:NUM:> (https://k6.io/)"" ""<:USERID:>"" ""frontend.ts<:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:*:> - default",22029
+39,"severity: info, message: home",13292
+59,"""POST /hipstershop.ProductCatalogService/ListProducts HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",13291
+67,"""POST /hipstershop.ProductCatalogService/ListProducts HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",13290
+60,"""GET / HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""k6/<:NUM:>.<:NUM:>.<:NUM:> (https://k6.io/)"" ""<:USERID:>"" ""frontend.ts<:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:*:> - default",13282
+75,"""POST /setCurrency HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""k6/<:NUM:>.<:NUM:>.<:NUM:> (https://k6.io/)"" ""<:USERID:>"" ""frontend.ts<:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:*:> - default",8865
+78,"severity: debug, message: setting currency",8859
+36,Executing endpoint 'gRPC - /hipstershop.CartService/AddItem',8858
+38,Request starting HTTP/<:HTTPVER:> POST http://<:SERVICE:><:PORT:>/hipstershop.CartService/AddItem application/grpc,8858
+40,"ddItemAsync called with userId=<:USERID:>, productId=<:PRODUCTID:>, quantity=<:NUM:>",8858
+50,Executed endpoint 'gRPC - /hipstershop.CartService/AddItem',8857
+37,"severity: debug, message: adding to cart",8855
+72,"""POST /cart HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""k6/<:NUM:>.<:NUM:>.<:NUM:> (https://k6.io/)"" ""<:USERID:>"" ""frontend.ts<:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:*:> - default",8852
+71,"""POST /hipstershop.CartService/AddItem HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",8851
+79,"""POST /hipstershop.CartService/AddItem HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",8826
+48,"""GET /metrics HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""Prometheus/<:NUM:>.<:NUM:>.<:NUM:>"" ""<:USERID:>"" ""<:SERVICE:>.ts:<:NUM:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> - default",7431
+29,"severity: info, message: [PlaceOrder] user id<:ITEM:>",4409
+7,"severity: debug, message: placing order",4408
+62,"""POST /hipstershop.CheckoutService/PlaceOrder HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",4396
+77,"""POST /hipstershop.CheckoutService/PlaceOrder HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",4395
+13,Executed endpoint 'gRPC - /hipstershop.CartService/EmptyCart',4394
+14,Request starting HTTP/<:HTTPVER:> POST http://<:SERVICE:><:PORT:>/hipstershop.CartService/EmptyCart application/grpc,4394
+20,"severity: info, message: [ShipOrder] completed request",4394
+22,Executing endpoint 'gRPC - /hipstershop.CartService/EmptyCart',4394
+23,mptyCartAsync called with userId=<:USERID:>,4394
+26,"severity: info, message: [ShipOrder] received request",4394
+28,"severity: info, message: payment went through (transaction id: <:USERID:>)",4394
+31,"severity: info, message: Transaction processed: visa ending<:ITEM:>",4394
+32,"severity: info, message: PaymentService#Charge invoked with request<:ITEM:>",4394
+58,"""POST /cart/checkout HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""k6/<:NUM:>.<:NUM:>.<:NUM:> (https://k6.io/)"" ""<:USERID:>"" ""frontend.ts<:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:*:> - default",4394
+30,"severity: INFO, message: A request to send order confirmation email to someone@example.com has been received.",4392
+68,"""POST /hipstershop.EmailService/SendOrderConfirmation HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",4392
+61,"""POST /hipstershop.ShippingService/ShipOrder HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",4390
+69,"""POST /hipstershop.CartService/EmptyCart HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",4390
+74,"""POST /hipstershop.PaymentService/Charge HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",4390
+73,"""POST /hipstershop.ShippingService/ShipOrder HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",4389
+76,"""POST /hipstershop.CartService/EmptyCart HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",4389
+66,"""POST /hipstershop.PaymentService/Charge HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",4387
+27,"severity: info, message: order confirmation email sent to ""someone@example.com""",4386
+16,"severity: info, message: order placed",4385
+70,"""POST /hipstershop.EmailService/SendOrderConfirmation HTTP/<:HTTPVER:>"" <:NUM:> - via upstream - ""-"" <:NUM:> <:NUM:> <:NUM:> <:NUM:> ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",4380
+80,"warning envoy config StreamAggregatedResources gRPC config stream closed: <:NUM:>, transport is closing",610
+81,info xdsproxy connected to upstream XDS server: istiod.istio-system.svc:<:NUM:>,609
+164,"at Grpc.Shared.Server.UnaryServerMethodInvoker`<:NUM:>.AwaitInvoker(Task`<:NUM:> invokerTask, GrpcActivatorHandle`<:NUM:> serviceHandle)",440
+116,"severity: error, message: request error",317
+160,"at Grpc.AspNetCore.Server.Internal.CallHandlers.UnaryServerCallHandler`<:NUM:>.HandleCallAsyncCore(HttpContext httpContext, HttpContextServerCallContext serverCallContext)",220
+161,"at Grpc.AspNetCore.Server.Internal.CallHandlers.ServerCallHandlerBase`<:NUM:>.<HandleCallAsync>g AwaitHandleCall <:NUM:> <:NUM:>(HttpContextServerCallContext serverCallContext, Method`<:NUM:> method, Task handleCall)",220
+165,[40m<:ANSI:>info<:ANSI:><:ANSI:><:ANSI:>: Grpc.AspNetCore.Server.ServerCallHandler[<:NUM:>],220
+166,Error status code 'FailedPrecondition' raised.,220
+167,"rpc.Core.RpcException: Status(StatusCode=""FailedPrecondition"", Detail=""Can't access cart storage. StackExchange.Redis.RedisTimeoutException: Timeout awaiting response (outbound=0KiB, <:*:> <:*:> elapsed, timeout is 5000ms), <:*:> next: <:*:> <:USERID:>, inst: <:NUM:>, qu: <:NUM:>, qs: <:NUM:>, aw: False, rs: ReadAsync, ws: Idle, in: <:NUM:>, in-pipe: <:NUM:>, out-pipe: <:NUM:>, serverEndpoint: redis-cart:<:NUM:>, mc: <:NUM:>/<:NUM:>/<:NUM:>, mgr: <:NUM:> of <:NUM:> available, clientName: <:SERVICE:><:NUM:>, IOCP: (Busy=<:NUM:>,Free=<:NUM:>,Min=<:NUM:>,Max=<:NUM:>), WORKER: (Busy=<:NUM:>,Free=<:NUM:>,Min=<:NUM:>,Max=<:NUM:>), v: <:NUM:>.<:NUM:>.<:NUM:>.<:NUM:> (Please take a look at this article for some common client-side issues that can cause timeouts: https://stackexchange.github.io/StackExchange.Redis/Timeouts)",220
+87,"severity: warning, message: failed to retrieve ads",199
+162,"at <:SERVICE:>.cartstore.RedisCartStore.GetCartAsync(String userId) in /app/cartstore/RedisCartStore.cs:line <:NUM:>"")",197
+163,at <:SERVICE:>.cartstore.RedisCartStore.GetCartAsync(String userId) in /app/cartstore/RedisCartStore.cs:line <:NUM:>,197
+89,"""POST /hipstershop.AdService/GetAds HTTP/<:HTTPVER:>"" <:NUM:> - max duration timeout - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> - default",116
+82,Background saving started by pid <:NUM:>,100
+83,<:NUM:> changes in <:NUM:> seconds. Saving...,100
+84,DB saved on disk,100
+85,Background saving terminated with success,100
+86,RDB: <:NUM:> MB of memory used by copy-on-write,100
+88,"""POST /hipstershop.AdService/GetAds HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> - default",83
+119,"""GET /product/<:PRODUCTID:> HTTP/<:HTTPVER:>"" <:NUM:> DC downstream remote disconnect - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""k6/<:NUM:>.<:NUM:>.<:NUM:> (https://k6.io/)"" ""<:USERID:>"" ""frontend.ts<:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:*:> - default",46
+120,"""GET /cart HTTP/<:HTTPVER:>"" <:NUM:> DC downstream remote disconnect - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""k6/<:NUM:>.<:NUM:>.<:NUM:> (https://k6.io/)"" ""<:USERID:>"" ""frontend.ts<:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:*:> - default",46
+92,self. http.endheaders(),40
+93,"self. send output(message body, encode chunked=encode chunked)",40
+94,"File ""/usr/local/lib/python3.<:NUM:>/http/client.py"", line <:NUM:>, in send output",40
+95,self.send(msg),40
+96,"File ""/usr/local/lib/python3.<:NUM:>/http/client.py"", line <:NUM:>, in send",40
+97,"File ""/usr/local/lib/python3.<:NUM:>/http/client.py"", line <:NUM:>, in connect",40
+98,"(self.host,self.port), self.timeout, self.source address)",40
+99,"File ""/usr/local/lib/python3.<:NUM:>/socket.py"", line <:NUM:>, in create connection",40
+100,raceback (most recent call last):,40
+101,"for res in socket.getaddrinfo(host, port, family, type, proto, flags):",40
+102,self.collector.submit(batch),40
+103,"File ""/usr/local/lib/python3.<:NUM:>/site-packages/thrift/transport/THttpClient.py"", line <:NUM:>, in flush",40
+104,RROR:opentelemetry.sdk.trace.export:Exception while exporting Span batch.,40
+106,"File ""/usr/local/lib/python3.<:NUM:>/socket.py"", line <:NUM:>, in getaddrinfo",40
+107,"for res in getaddrinfo(host, port, <:NUM:>, SOCK STREAM):",40
+108,"File ""/usr/local/lib/python3.<:NUM:>/http/client.py"", line <:NUM:>, in endheaders",40
+109,self.http transport.flush(),40
+110,self.connect(),40
+111,"File ""/usr/local/lib/python3.<:NUM:>/site-packages/opentelemetry/exporter/jaeger/ init py"", line <:NUM:>, in submit",40
+113,self.span exporter.export(self.spans list[:idx]) # type: ignore,40
+114,"File ""/usr/local/lib/python3.<:NUM:>/site-packages/opentelemetry/sdk/trace/export/ init py"", line <:NUM:>, in export",40
+142,"""POST /hipstershop.CurrencyService/GetSupportedCurrencies HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> - default",36
+169,"at <:SERVICE:>.cartstore.RedisCartStore.AddItemAsync(String userId, String productId, Int32 quantity) in /app/cartstore/RedisCartStore.cs:line <:*:>",32
+150,"File ""email server.py"", line <:NUM:>, in new export",25
+173,"""POST /hipstershop.CartService/GetCart HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",25
+141,"""POST /hipstershop.CurrencyService/Convert HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> - default",24
+105,ocket.gaierror: [Errno <:NUM:>] Name or service not known,22
+145,"warning envoy config StreamAggregatedResources gRPC config stream closed: <:NUM:>, connection error: desc = ""transport: Error while dialing dial tcp: i/o timeout""",19
+115,ocket.gaierror: [Errno <:NUM:>] Temporary failure in name resolution,18
+117,"""POST /hipstershop.RecommendationService/ListRecommendations HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> - default",18
+168,"at <:SERVICE:>.CartServiceImpl.AddItem(AddItemRequest request, ServerCallContext context) in /app/CartServiceImpl.cs:line <:NUM:>",16
+112,"File ""/<:SERVICE:>/recommendation server.py"", line <:NUM:>, in new export",15
+128,[40m<:ANSI:>info<:ANSI:><:ANSI:><:ANSI:>: Microsoft.Hosting.Lifetime[<:NUM:>],12
+143,"""GET / HTTP/<:HTTPVER:>"" <:NUM:> DC downstream remote disconnect - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""k6/<:NUM:>.<:NUM:>.<:NUM:> (https://k6.io/)"" ""<:USERID:>"" ""frontend.ts<:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:*:> - default",10
+146,"""POST /cart/checkout HTTP/<:HTTPVER:>"" <:NUM:> DC downstream remote disconnect - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""k6/<:NUM:>.<:NUM:>.<:NUM:> (https://k6.io/)"" ""<:USERID:>"" ""frontend.ts<:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:>:<:NUM:> - default",10
+149,"""POST /hipstershop.CurrencyService/GetSupportedCurrencies HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",9
+151,"severity: warning, message: failed to send order confirmation to ""someone@example.com"": rpc error: code = Canceled desc = context canceled",9
+152,"""POST /hipstershop.CheckoutService/PlaceOrder HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",9
+153,"""POST /hipstershop.EmailService/SendOrderConfirmation HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",9
+154,"""POST /hipstershop.CheckoutService/PlaceOrder HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",9
+132,"""POST /hipstershop.CartService/GetCart HTTP/<:HTTPVER:>"" <:NUM:> UF upstream reset before response started{connection failure} - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> - <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",8
+170,at <:SERVICE:>.cartstore.RedisCartStore.EmptyCartAsync(String userId) in /app/cartstore/RedisCartStore.cs:line <:NUM:>,7
+171,"at <:SERVICE:>.CartServiceImpl.EmptyCart(<:SPANID:> request, ServerCallContext context) in /app/CartServiceImpl.cs:line <:NUM:>",7
+172,"at <:SERVICE:>.cartstore.RedisCartStore.EmptyCartAsync(String userId) in /app/cartstore/RedisCartStore.cs:line <:NUM:>"")",7
+135,"""- - -"" <:NUM:> - - - ""-"" <:*:> <:*:> <:NUM:> - ""-"" ""-"" ""-"" ""-"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> redis-cart.ts.svc.cluster.local -",6
+148,"""POST /hipstershop.CurrencyService/Convert HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",6
+118,"""POST /hipstershop.RecommendationService/ListRecommendations HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",4
+156,"warning envoy config StreamAggregatedResources gRPC config stream closed: <:NUM:>, connection error: desc = ""transport: Error while dialing dial tcp: lookup istiod.istio-system.svc on <:IP:>:<:NUM:>: read udp <:IP:><:PORT:>-><:IP:>:<:NUM:>: i/o timeout""",4
+90,"""POST /hipstershop.AdService/GetAds HTTP/<:HTTPVER:>"" <:NUM:> - max duration timeout - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",3
+91,"""POST /hipstershop.AdService/GetAds HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",3
+121,ut of memory.,3
+122,rying to start a grpc server at <:IP:>:<:NUM:>,3
+123,eading cart service port from PORT environment variable,3
+124,nsecure mode!,3
+125,eading host address from LISTEN ADDR environment variable,3
+126,tarted as process with id <:NUM:>,3
+127,Content root path: /app,3
+129,Hosting environment: Production,3
+130,Application started. Press Ctrl+C to shut down.,3
+131,Now listening on: http://<:IP:>:<:NUM:>,3
+133,"onnecting to Redis: redis-cart:<:NUM:>,ssl=false,allowAdmin=true,connectRetry=<:NUM:>",3
+134,eading redis cache address from environment variable REDIS ADDR,3
+137,erforming small test,3
+138,uccessfully connected to Redis,3
+139,mall test result: OK,3
+155,"""POST /hipstershop.EmailService/SendOrderConfirmation HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",3
+136,"""- - -"" <:NUM:> - - - ""-"" <:SEQ:> <:SEQ:> <:NUM:> - ""-"" ""-"" ""-"" ""-"" ""<:IP:><:PORT:>"" outbound <:NUM:> redis-cart.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - -",2
+140,onnection to redis was retored successfully,2
+157,"warning envoy config StreamAggregatedResources gRPC config stream closed: <:NUM:>, connection error: desc = ""transport: Error while dialing dial tcp <:IP:>:<:NUM:>: i/o timeout""",2
+158,"<:NUM:>/<:NUM:>/<:NUM:> <:NUM:>:<:NUM:>:<:NUM:> Post ""http://jaeger-collector:<:NUM:>/api/traces"": dial tcp: i/o timeout",2
+144,"warning envoy config StreamAggregatedResources gRPC config stream closed: <:NUM:>, connection error: desc = ""transport: authentication handshake failed: context deadline exceeded""",1
+147,"warning envoy config StreamAggregatedResources gRPC config stream closed: <:NUM:>, connection error: desc = ""transport: Error while dialing dial tcp: lookup istiod.istio-system.svc on <:IP:>:<:NUM:>: no such host""",1
+159,"""POST /hipstershop.CartService/AddItem HTTP/<:HTTPVER:>"" <:NUM:> UF upstream reset before response started{connection failure} - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> - <:IP:><:PORT:> <:IP:><:PORT:> outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local default",1
+174,"""POST /cart HTTP/<:HTTPVER:>"" <:NUM:> DC downstream remote disconnect - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""k6/<:NUM:>.<:NUM:>.<:NUM:> (https://k6.io/)"" ""<:USERID:>"" ""frontend.ts<:PORT:>"" ""<:IP:><:PORT:>"" inbound <:NUM:> <:IP:><:PORT:> <:IP:><:PORT:> <:IP:><:PORT:> - default",1
+175,"""POST /hipstershop.CartService/AddItem HTTP/<:HTTPVER:>"" <:NUM:> - http2.remote reset - ""-"" <:NUM:> <:NUM:> <:NUM:> - ""-"" ""grpc-go/<:GRPCVER:>"" ""<:USERID:>"" ""<:SERVICE:><:PORT:>"" ""<:IP:><:PORT:>"" outbound <:NUM:> <:SERVICE:>.ts.svc.cluster.local <:IP:><:PORT:> <:IP:>:<:NUM:> <:IP:><:PORT:> - default",1

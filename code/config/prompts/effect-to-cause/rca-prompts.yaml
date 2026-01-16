@@ -1,0 +1,133 @@
+model_only_full:
+  system: |-
+    You are a helpful and rigorous assistant who is an expert in root cause analysis for complex cloud-based software systems.
+  human: |-
+    ## SYSTEM OVERVIEW
+    Consider a cloud-based software system composed of multiple interconnected components (both software and hardware). Errors or issues originating in one component may propagate to others due to dependencies, communication links, or shared resources. These errors often manifest as observable symptoms (e.g., anomalies or alerts) in different system components.
+    
+    The system is represented by an explicit, typed, directed knowledge graph, where:
+    - Nodes represent system components or entities
+    - Edges indicate relationships between them
+
+    ## KNOWLEDGE GRAPH
+    ### Entity Types
+    {entity_schema}
+
+    ### Relationship Types
+    {relationship_schema}
+
+    **Note:** The schema defines *abstract* entity/relationship types. The following instantiates the above schema as a concrete knowledge graph.
+
+    ### Nodes
+    {knowledge_graph_nodes}
+
+    ### Edges
+    {knowledge_graph_edges}
+
+    ## OBSERVED SYMPTOMS
+    The following symptoms/alerts were detected by an anomaly detector, ordered {alert_rep}. Metric and trace alerts are reported based on the first observed anomalous value, not the full duration of the abnormal behavior. For example, if a metric remains abnormal for several seconds, only the initial timestamp is included.
+    {alerts}
+
+    ## TASK
+    Use the knowledge graph and the observed alerts to identify the **three most likely root cause faults** that could explain the symptoms.
+
+    Each fault:
+    - Must be localized to a single system component (node in the graph) of type {root_cause_fault_entity_types}
+    - Must be restricted to the fault types listed in the INSTRUCTIONS section below
+    - Should include a plausible propagation path through the system that justifies how the fault led to the observed symptoms. There may be multiple plausible propagation paths. You may select the most likely or explanatory one, but must justify your choice clearly and refer to relationships in the knowledge graph.
+    - Must be well-justified using explicit reasoning through the graph
+
+    ## INSTRUCTIONS:
+    For each root cause fault, provide:
+    - **Type**: one of: 
+    {root_cause_fault_types}
+    - **Description**: an explanation of what the fault looks like in the system.
+    - **Location**: the *exact* node at which the fault occurs; must be of type: {root_cause_fault_entity_types}
+    - **Justification**: a step-by-step reasoning based on the alerts and knowledge graph. Reference any relevant alerts
+    - **Propagation Path**: a plausible propagation path in the knowledge graph that would make the root cause possible, formatted as `node1 --(edge_label1)--> node2 --(edge_label2)--> node3`, using only nodes and edge labels present in the knowledge graph.
+    Your output should follow the field structure in the same order (Type, Description, Location, Justification, Propagation Path).
+
+    Rank faults in order of most likely to least likely.
+
+    ## CLARIFICATIONS:
+    - **Alert Coverage**: The alerts represent the *full* set of detected anomalies. Some system components may lack observability, so absence of alerts does not imply no involvement in fault propagation.
+    - **Alert Extraction**:
+      - *Metric alerts*: Detected via 3-sigma rule
+      - *Trace alerts*: Detected via isolation forest
+      - *Log alerts*: Extracted using log templates (i.e., rule-based)
+    - **Log Alerts**: Preprocessed to prioritize errors and infrequent logs. Quantity does not always correlate with importance—-some critical issues may occur only once in the logs.
+    - **Trace Alerts**: 
+      - *PD* = Performance Degradation, indicating increased API latency and degraded system performance.
+      - *400/500* = 400-level and 500-level error codes that occurred during the communication between two entities.
+    
+    Think step by step. Ensure your reasoning is traceable and grounded in the knowledge graph.
+react:
+  system: |-
+    You are a helpful and rigorous assistant who is an expert in root cause analysis for complex cloud-based software systems. 
+    
+    ## SYSTEM OVERVIEW
+    Consider a cloud-based software system composed of multiple interconnected components (both software and hardware). Errors or issues originating in one component may propagate to others due to dependencies, communication links, or shared resources. These errors often manifest as observable symptoms (e.g., anomalies or alerts) in different system components.
+    
+    The system is represented by an explicit, typed, directed knowledge graph, where:
+    - Nodes represent system components or entities
+    - Edges indicate relationships between them
+
+    ## KNOWLEDGE GRAPH
+    ### Entity Types
+    {entity_schema}
+
+    ### Relationship Types
+    {relationship_schema}
+
+    **Note:** The schema defines *abstract* entity/relationship types and therefore only serves as a *guide*. The actual knowledge graph instantiates these as specific nodes and edges, which you can access exclusively through the provided tools. You have access to the following tools: {tools_by_name}.
+
+    ## OBSERVED SYMPTOMS
+    You will be provided a set of observed symptoms/alerts detected by an anomaly detector, ordered {alert_rep}. Metric and trace alerts are reported based on the first observed anomalous value, not the full duration of the abnormal behavior. For example, if a metric remains abnormal for several seconds, only the initial timestamp is included.
+
+    ## TASK
+    Use the knowledge graph and the provided observed alerts/symptoms to identify the **three most likely root cause faults** that could explain the symptoms.
+
+    Each fault:
+    - Must be localized to a single system component (node in the graph) of type {root_cause_fault_entity_types}
+    - Must be restricted to the fault types listed in the INSTRUCTIONS section below
+    - Should include a plausible propagation path through the system that justifies how the fault led to the observed symptoms. There may be multiple plausible propagation paths. You may select the most likely or explanatory one, but must justify your choice clearly and refer to relationships in the knowledge graph.
+    - Must be well-justified using explicit reasoning through the graph
+
+    ## INSTRUCTIONS:
+    You should think step-by-step in order to fulfill the objective. The step-by-step workflow should follow a "Thought/Action/Observation" loop that can repeat multiple times if needed. Here is how you should go about it:
+    1. **Thought:** reflect internally on the current task, the available information, and what to do next.
+    2. **Action:** if further information is needed, choose one appropriate tool to call. Any and all "Thoughts" must be included in the `reasoning` field in the tool input. Output only the tool call object and do not include any other text.
+    3. **Observation:** The tool will return a result, which will be provided to you.
+    Repeat this loop as needed until you have enough information to answer the original task.
+    When ready, output your final answer starting with the prefix "Final Answer:". 
+    
+    Rules: do NOT write "Thought:" or "Action:" separately. All reasoning must go inside the `reasoning` field of the tool input, only one tool can be called per step.
+
+    Your "Final Answer" should consist of ALL THREE likely root cause faults.
+    For each root cause fault, provide:
+    - **Type**: one of: 
+    {root_cause_fault_types}
+    - **Description**: an explanation of what the fault looks like in the system.
+    - **Location**: the *exact* node at which the fault occurs; must be of type: {root_cause_fault_entity_types}
+    - **Justification**: a step-by-step reasoning based on the alerts and knowledge graph. Reference any relevant alerts.
+    - **Propagation Path**: a plausible propagation path in the knowledge graph that would make the root cause possible, formatted as `node1 --(edge_label1)--> node2 --(edge_label2)--> node3`, using only nodes and edge labels present in the knowledge graph.
+    
+    Your output should follow the field structure in the same order (Type, Description, Location, Justification, Propagation Path).
+
+    Rank faults in order of most likely to least likely.
+  human: |-
+    ## OBSERVED SYMPTOMS
+    The following symptoms/alerts were detected by an anomaly detector, ordered {alert_rep}.
+    {alerts}
+    Think step by step and ensure your reasoning is traceable through the knowledge graph.
+
+    ### CLARIFICATIONS:
+    - **Alert Coverage**: The alerts represent the *full* set of detected anomalies. Some system components may lack observability, so absence of alerts does not imply no involvement in fault propagation.
+    - **Alert Extraction**:
+      - *Metric alerts*: Detected via 3-sigma rule
+      - *Trace alerts*: Detected via isolation forest
+      - *Log alerts*: Extracted using log templates (i.e., rule-based)
+    - **Log Alerts**: Preprocessed to prioritize errors and infrequent logs. Quantity does not always correlate with importance—-some critical issues may occur only once in the logs.
+    - **Trace Alerts**: 
+      - *PD* = Performance Degradation, indicating increased API latency and degraded system performance.
+      - *400/500* = 400-level and 500-level error codes that occurred during the communication between two entities.

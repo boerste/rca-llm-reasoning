@@ -1,0 +1,104 @@
+systems:
+  - MicroSS
+  - Online-Boutique-cloudbed-1
+  - Online-Boutique-cloudbed-2
+
+MicroSS:
+  alert_timezone: 'Asia/Shanghai'
+
+Online-Boutique-cloudbed-1:
+  alert_timezone: 'Asia/Shanghai'
+
+Online-Boutique-cloudbed-2:
+  alert_timezone: 'Asia/Shanghai'
+
+version: "v4"
+kg_file_dir: "data/system-knowledge-graphs/original/{system}"
+fault_data_dir: "data/fault-alerts/{system}"
+results_directory: "results/v4/{model}/{system}/"
+er_specifications_file: "data/entity-relationships/entity-relationships-specification.json"
+
+write_results_freq: 5
+start_index: 0
+stop_index: null
+recursion_limit: 50
+max_new_tokens_default: &max_new_tokens_default 2048
+context_length: 14848
+
+models:
+  - llama3.2:3b
+  - qwen3:4b
+  - qwen3:32b
+  - llama3.3
+  - deepseek-r1:70b
+  - command-r-plus
+  # OpenRouter models (requires OPENROUTER_API_KEY)
+    # - anthropic/claude-opus-4.5
+    # - moonshotai/kimi-k2-thinking
+    # - minimax/minimax-01
+
+all_settings:
+  - model_only_full
+  - react
+  - plan_execute_react
+
+settings_to_run:
+  - model_only_full
+  - react
+  - plan_execute_react
+
+model_only_full:
+  use_react: "False"
+  use_plan_execute: "False"
+  file_name: "responses-model-only-full.txt"
+  class_name: "ModelOnlySetting"
+  name: "model-only"
+  input_key: "messages"
+  state_key: "messages"
+  max_new_tokens: -2 # = same as context window
+
+react:
+  use_react: "True"
+  use_plan_execute: "False"
+  file_name: "responses-react.txt"
+  class_name: "ReactSetting"
+  name: "react"
+  input_key: "messages"
+  state_key: "messages"
+  max_new_tokens: *max_new_tokens_default
+
+plan_execute_react:
+  use_react: "True"
+  use_plan_execute: "True"
+  file_name: "responses-plan-execute-react.txt"
+  class_name: "PlanExecuteReactSetting"
+  name: "plan-execute-react"
+  input_key: "messages"
+  state_key: "messages"
+  max_new_tokens: *max_new_tokens_default
+
+all_tasks:
+  - effect_to_cause
+
+tasks_to_run:
+  - effect_to_cause
+
+effect_to_cause:
+  structured_output: "RootCausesResponse"
+  prompts_dir: "code/config/prompts/effect-to-cause"
+
+all_kg_reps:
+  - list
+  - json
+
+kg_reps_to_run:
+  - list
+  - json
+
+all_alert_reps:
+  - by-time
+  - by-component
+
+alert_reps_to_run:
+  - by-time
+  - by-component

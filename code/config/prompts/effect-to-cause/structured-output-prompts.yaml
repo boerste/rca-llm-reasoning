@@ -1,0 +1,53 @@
+system: |- 
+  You are an AI assistant skilled in processing and structuring information. Your task is to extract relevant details from an unstructured analysis and convert them into a structured format that follows a predefined schema.
+human: |-
+  A root cause analysis expert has determined three likely root cause faults for a set of observed symptoms/alerts in a cloud-based system. Below, the chat history with the expert is provided. It contains a discussion about the root cause analysis performed by the expert for the given scenario. The expert has provided an unstructured response detailing three likely root cause faults that could have been the underlying cause of the observed symptoms. Each root cause includes:
+   - A failure type
+   - A description of what the root cause failure looks like in the system
+   - The location of the root cause failure in the system
+   - A justification explaining the failure propagation (i.e., how the symptom could occur due to the root cause)
+   - A failure propagation path through the knowledge graph
+
+  Your job is to extract this information and format it according to the `RootCausesResponse` schema.
+
+  ## INPUT:
+  Here is the full chat history with the expert. Generally, the last message contains the unstructured response:
+
+  ```
+  {messages}  
+  ```
+
+  ## TASK:
+    1. Analyze the provided chat history (above) and extract information related to the three root causes.
+    2. Map each symptom to the corresponding fields in the `RootCause` schema:
+        - `type`: The type of root cause failure.
+        - `description`: Explanation of what the root cause failure looks like in the system.
+        - `location`: The single exact node where this root cause failure would occur.
+        - `justification`: A step-by-step reasoning based on the given alerts and information from the knowledge graph that explais how the symptoms could occur due to the root cause.
+        - `propagation_path`: The specific failure propagation path in the knowledge graph that would make the root cause possible, formatted as `node1 --(edge_label1)--> node2 --(edge_label2)--> node3`.
+    3. Ensure that the structured output preserves the reasoning, explanations, and relationships as described in the unstructured response.
+    4. Do not introduce new root causes or modify the given reasoning or explanations. Strictly extract and structure the details as they appear.
+
+  ## OUTPUT FORMAT:
+  Return a JSON object formatted as follows:
+  ```
+  {{
+    "root causes": [
+        {{
+            "type": "high memory usage",
+            "description": "The redisservice1 instance is experiencing high memory usage, leading to performance degradation and increased latency in the system.",
+            "location": "redisservice1",
+            "justification": "The metric alerts for redis at 21:18:24.000 show an increase in redis_info_memory_fragmentation_bytes and redis_info_memory_used_rss. This suggests a memory-related issue. The subsequent metric alerts for redisservice1 at 21:18:48.000 indicate an increase in in memory stats. The trace alerts involving redisservice1 (e.g., dbservice1 --> redisservice1, webservice1 --> redisservice1, mobservice1 --> redisservice1) with PD (Performance Degradation) indicate that the issue with redisservice1 is affecting other services, likely due to its high memory usage causing slow responses or failures.",
+            "propagation_path": "redisservice1 --(instance_of)--> redisservice --(data_flow)--> redis --(hosted_on)--> host2 --(hosts)--> webservice2 --(instance_of)--> webservice --(control_flow)--> mobservice --(instance_of)--> mobservice2"
+        }},
+        {{
+            "type": "session timeout",
+            "description": "The service instance is experiencing session timeouts, leading to failed interactions with other services and performance degradation.",
+            "location": "webservice2",
+            "justification": "Trace alerts involving `webservice2` (e.g., `webservice2 --> loginservice1`, `webservice2 --> mobservice1`) show 'PD' (Performance Degradation), which could be due to session timeouts affecting service performance. Metric alerts for `webservice2` indicate issues with CPU and memory usage, which could be secondary effects of session timeouts causing services to wait indefinitely. The presence of `webservice2` in multiple trace alerts with different services suggests it might be a bottleneck or point of failure.",
+            "propagation_path": "webservice2 --(instance_of)--> webservice --(control_flow)--> mobservice --(has_instance)--> mobservice2 --(hosted_on)--> host4 --(hosts)--> dbservice1"
+        }},
+        ...
+    ]
+  }}
+  ```

@@ -1,0 +1,17 @@
+id,template,count
+6,"<:TIME:> INFO <:HOST:> <:HOST:> <:POD:> <:*:> call service:<:POD:>, inst:<:IP:> as a downstream service",24495
+3,"<:TIME:> INFO <:HOST:> <:HOST:> <:POD:> <:*:> now call service:<:POD:>, inst:<:IP:> as a downstream service",16326
+1,<:TIME:> INFO <:HOST:> <:HOST:> <:POD:> <:*:> the list of all available services are <:POD:>: <:IP:> <:POD:>: <:IP:>,16322
+2,"<:TIME:> INFO <:HOST:> <:HOST:> <:POD:> <:*:> request <:IP:> and param={'keys': '<:UID:>', 'value': '', 'ex': 10}",16321
+4,<:TIME:> INFO <:HOST:> <:HOST:> <:POD:> <:*:> uuid: <:UID:> write redis successfully,16318
+5,"<:TIME:> INFO <:HOST:> <:HOST:> <:POD:> <:*:> complete information: {'uuid': '<:UID:>', 'user id': <:*:>",12253
+11,<:TIME:> ERROR <:HOST:> <:POD:> <:FILE METHOD LINE:> <:*:> get a error [Errno 2] No such file or directory: 'resources/source file/source file.csv',4064
+7,<:TIME:> ERROR <:HOST:> <:HOST:> <:POD:> <:*:> an error occurred in the downstream service,1763
+10,"<:TIME:> INFO <:HOST:> <:POD:> <:FILE METHOD LINE:> <:ID:> call service:<:POD:>, inst:<:IP:> as a downstream service",13
+8,<:TIME:> INFO <:HOST:> <:POD:> <:FILE METHOD LINE:> <:ID:> uuid: <:UID:> write redis successfully,10
+9,<:TIME:> INFO <:HOST:> <:POD:> <:FILE METHOD LINE:> <:ID:> the list of all available services are <:POD:>: <:IP:> <:POD:>: <:IP:>,7
+15,<:TIME:> ERROR <:HOST:> <:POD:> <:FILE METHOD LINE:> <:ID:> an error occurred in the downstream service,4
+13,"<:TIME:> INFO <:HOST:> <:POD:> <:FILE METHOD LINE:> <:ID:> complete information: {'uuid': '<:UID:>', 'user id': <:*:>",2
+12,"<:TIME:> ERROR <:HOST:> <:POD:> <:FILE METHOD LINE:> <:ID:> unknown error occurred, status code == 200, message:{'message': 'redis write success, keys=<:UID:>, value=', 'status code': 200}",1
+14,"<:TIME:> INFO <:HOST:> <:POD:> <:FILE METHOD LINE:> <:ID:> request <:IP:> and param={'keys': '<:UID:>', 'value': '', 'ex': 10}",1
+16,"<:TIME:> INFO <:HOST:> <:POD:> <:FILE METHOD LINE:> <:ID:> now call service:<:POD:>, inst:<:IP:> as a downstream service",1

@@ -1,0 +1,125 @@
+{
+    "note": "Entities and relationships grounded in 24765-2017 - ISO/IEC/IEEE International Standard - Systems and software engineering--Vocabulary",
+    "entities": [
+        {
+            "id": "Service",
+            "definition": "An aggregation of software that satisfies an end use function."
+        },
+        {
+            "id": "Service_Instance",
+            "definition": "A specific and identifiable runtime execution of a Service.",
+            "attributes": "type, log_alerts, metric_alerts"
+        },
+        {
+            "id": "Host",
+            "definition": "A virtual or physical computer, hardware device, or environment where software items or programs are deployed, installed, or executed.",
+            "examples": "Virtual machine (VM), container, server, node"
+        },
+        {
+            "id": "Coordination_Manager",
+            "definition": "A component that manages metadata, state synchronization, and coordination tasks.",
+            "examples": "ZooKeeper, Consul"
+        },
+        {
+            "id": "Database",
+            "definition": "An organized persistent collection of data and information that allows for its retrieval.",
+            "examples": "MySQL, key-value store, file"
+        },
+        {
+            "id": "Cache",
+            "definition": "An organized non-persistent collection of data and information that allows for its retrieval.",
+            "examples": "redis"
+        },
+        {
+            "id": "Cache_Instance",
+            "definition": "A specific and identifiable runtime execution of a Cache."
+        }
+    ],
+    "relationships": [
+        {
+            "source": "Service",
+            "target": "Service_Instance",
+            "label": "has_instance"
+        },
+        {
+            "source": "Service_Instance",
+            "target": "Service",
+            "label": "instance_of"
+        },
+        {
+            "source": "Cache",
+            "target": "Cache_Instance",
+            "label": "has_instance"
+        },
+        {
+            "source": "Cache_Instance",
+            "target": "Cache",
+            "label": "instance_of"
+        },
+        {
+            "source": "Service",
+            "target": "Service",
+            "label": "control_flow"
+        },
+        {
+            "source": "Service",
+            "target": "Database",
+            "label": "data_flow"
+        },
+        {
+            "source": "Service",
+            "target": "Cache",
+            "label": "data_flow"
+        },
+        {
+            "source": "Service_Instance",
+            "target": "Host",
+            "label": "hosted_on"
+        },
+        {
+            "source": "Host",
+            "target": "Service_Instance",
+            "label": "hosts"
+        },
+        {
+            "source": "Cache_Instance",
+            "target": "Host",
+            "label": "hosted_on"
+        },
+        {
+            "source": "Host",
+            "target": "Cache_Instance",
+            "label": "hosts"
+        },
+        {
+            "source": "Cache",
+            "target": "Host",
+            "label": "hosted_on"
+        },
+        {
+            "source": "Host",
+            "target": "Cache",
+            "label": "hosts"
+        },
+        {
+            "source": "Database",
+            "target": "Host",
+            "label": "hosted_on"
+        },
+        {
+            "source": "Host",
+            "target": "Database",
+            "label": "hosts"
+        },
+        {
+            "source": "Coordination Manager",
+            "target": "Service_Instance",
+            "label": "discovers"
+        },
+        {
+            "source": "Service_Instance",
+            "target": "Coordination Manager",
+            "label": "registers_with"
+        }
+    ]
+}

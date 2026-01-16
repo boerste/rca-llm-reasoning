@@ -1,0 +1,306 @@
+failure-classification:
+  system: |
+    You are a rigorous assistant that does excellent critical thinking and thinks from an academic research point of view. Your task is to qualitatively analyze the reasoning of an LLM agent in a root cause analysis task and identify any reasoning failures according to a given taxonomy. Work through the annotation workflow step by step. Only mark failures you are reasonably confident in.
+  human: |
+    ## REASONING FAILURE TAXONOMY
+
+    ### RF-00 - Final response divergence
+
+    Scope: Final structured output response vs final unstructured answer.
+    Definition: The final response (structured output response) does not accurately reflect/represent the unstructured final answer the model arrived at.
+    Example: Unstructured final answer mentions "session timeout at dbservice1" as Root Cause #1 while the structured final response lists "high memory usage at redisservice1" as the most likely root cause.
+    Signals: The location, type, and justification of likely root-cause faults are different between the unstructured final answer and the structured final response (JSON object).
+    Annotation rule: If the structured final response is None or nan, do NOT mark RF-00. Otherwise, compare the final structured output response and final unstructured answer; if divergence, mark RF-00.
+    Severity: 1-5 
+      - 1 = hypotheses are the same, but only a minor discrepancy in ranking
+      - 2 = hypotheses are similar but some critical fields like location, type, propagation path are different
+      - 3 = 1 hypothesis is completely different
+      - 4 = 2 hypotheses are completely different
+      - 5 = all 3+ hypotheses are different and unrelated
+
+    ### RF-01 — Fabricated evidence (hallucinated alerts/metrics/logs/traces)
+
+    Scope: per-hypothesis (evidence existence)
+    Definition: Model asserts the existence of a specific alert/metric/log/trace that cannot be found in the provided alerts/metrics/logs/traces after up to 3 quick scans.
+    Example: Claims `2025-09-01 12:05 | METRIC | dbservice1 | disk_io | up` or "The disk_io metric was up for dbservice", but no such record (or any reasonably equivalent entry for that alert) exists in the provided alerts.
+    Signals: Model quotes an alert absent in the alert set; model uses confident language about a concrete alert that cannot be located.
+    Annotation rule: Perform up to 3 quick scans (exact or close fuzzy match on component + metric/endpoint + time) for each piece of evidence mentioned. If no match found, mark RF-01 and paste model claim + NO MATCH FOUND.
+    Severity: 1-5
+      - 1 = single fabricated alert/metric/log/trace in 1 hypothesis
+      - 2 = multiple occurrences in 1 hypothesis
+      - 3 = single occurrence in 2 hypotheses
+      - 4 = multiple occurrences in 2 hypotheses
+      - 5 = present in all 3+ hypotheses
+
+    ### RF-02 — Metric-interpretation error (directionality / semantic misread)
+
+    Scope: per-hypothesis (evidence interpretation)
+    Definition: Misunderstands/misinterprets metric semantics (up => +3σ, down => −3σ), confuses counters/gauges, or inverts meaning.
+    Example: "docker_memory_rss_pct is down, indicating high memory usage." (direction inverted: down for this metric means memory measure decreased); "mem_usage is down, indicating a memory leak" (misinterpretation: a memory leak would typically correlate with increased memory usage).
+    Signals: Interpretation directly contradicts the standard metric meaning or contradicts ±3σ (i.e., up/down) semantics for the metric.
+    Annotation rule: If the alert exists but interpretation contradicts metric semantics → label RF-02 and paste the model claim(s) + alert(s) it referenced.
+    Severity: 1-5
+      - 1 = single metric misinterpretation in 1 hypothesis
+      - 2 = multiple occurrences in 1 hypothesis
+      - 3 = single occurrence in 2 hypotheses
+      - 4 = multiple occurrences in 2 hypotheses
+      - 5 = present in all 3+ hypotheses
+
+    ### RF-03 — Confused provenance (symptom-observer blamed as cause)
+
+    Scope: per-hypothesis (provenance)
+    Definition: Model treats the component that observed/logged a symptom as the origin/root cause rather than tracing upstream/downstream sources.
+    Example: Webservice log contains "an error occurred in a downstream service"; model concludes "webservice is root cause" instead of investigating downstream services.
+    Signals: Log text contains explicit downstream/propagation language; model names observer as cause.
+    Annotation rule: If evidence indicates an observed downstream symptom and model blames the observer, mark RF-03.
+    Severity: 1-5
+      - 1 = single confused provenance instance in 1 hypothesis
+      - 2 = multiple occurrences in 1 hypothesis
+      - 3 = single occurrence in 2 hypotheses
+      - 4 = multiple occurrences in 2 hypotheses
+      - 5 = present in all 3+ hypotheses
+
+    ### RF-04 — Temporal misordering (timeline error)
+
+    Scope: per-hypothesis (timestamps)
+    Definition: Model assigns causation to an event occurring after the observed effect or otherwise violates alert timestamp ordering.
+    Example: A log says background save (BGSAVE) started at 12:20, but multiple memory/I/O anomalies began at 12:15; model claims BGSAVE caused the earlier anomalies.
+    Signals: Claimed cause timestamp is later than the earliest effect timestamp.
+    Annotation rule: Extract model-cited timestamps and compare to alerts; if the causal claim violates the real timeline, mark RF-04. If ordering is implied and contradicts alert order, still mark RF-04.
+    Severity: 1-5
+      - 1 = single temporal misordering in 1 hypothesis
+      - 2 = multiple occurrences in 1 hypothesis
+      - 3 = single occurrence in 2 hypotheses
+      - 4 = multiple occurrences in 2 hypotheses
+      - 5 = present in all 3+ hypotheses
+
+    ### RF-05 — Spurious causal attribution (weak/unsupported causation OR mechanism depends on nonexistent KG link)
+
+    Scope: per-hypothesis (mechanism/causal chain)
+    Definition: Model asserts X → Y causation without adequate support, or uses a causal mechanism that depends on knowledge-graph relationships that do not exist. Plausible speculation consistent with the KG and alerts is acceptable and should not be penalized. KG relationships that are close-enough without detracting from the point being made OR aligned more closely with trace alerts should also not be penalized (e.g., `webservice1 --(instance_of)--> webservice --(control_flow)--> redisservice --(has_instance)--> redisservice2` vs `webservice1 --(control_flow)--> redisservice2`)
+    Example: Claims node-6 disk writes cause shippingservice-0 latency because “node-6 --(hosts)--> shippingservice-0”, but that host relationship is nonexistent in the KG.
+    Signals: Use of causal language ("caused", "because of", "therefore") plus no plausible KG/alert support, or explicit citation of nonexistent KG edges (based on the information available).
+    Annotation rule: Check KG & alerts for the mechanism; if mechanism unsupported or relies on absent KG links, mark RF-05.
+    Severity: 1-5
+      - 1 = single spurious causal attribution in 1 hypothesis
+      - 2 = multiple occurrences in 1 hypothesis
+      - 3 = single occurrence in 2 hypotheses
+      - 4 = multiple occurrences in 2 hypotheses
+      - 5 = present in all 3+ hypotheses
+
+    ### RF-06 — Unjustified instance/granularity specificity
+
+    Scope: per-hypothesis (granularity)
+    Definition: Model asserts an instance-level root-cause location when evidence supports only service-/node-level effect, unless unique per-instance multi-modal evidence exists.
+    Example: Service-wide alerts, but model blames loginservice2 instance without unique evidence.
+    Signals: No unique instance differentiator (multi-modal alerts, unique timestamps, volume, frequency).
+    Annotation rule: If instance claim lacks per-instance unique evidence, mark RF-06. Only relevant for cases where the root-cause location can be more than only instance-level.
+    Severity: 1-5
+      - 1 = present for 1 hypothesis
+      - 3 = present for 2 hypotheses
+      - 5 = present in all 3 hypotheses
+
+    ### RF-07 — Arbitrary / non-systematic evidence selection (bad triage)
+
+    Scope: per-hypothesis (evidence selection)
+    Definition: Model focuses on a seemingly arbitrary alert subset inconsistent with simple triage heuristics (i.e., first-seen, highest-frequency, highest-volume, multi-modal alerts vs single-modal alerts) without rationale, and selection plausibly alters diagnostic trajectory/conclusions.
+    Example: Investigates loginservice2 though loginservice1 has identical metric/trace alerts earlier in time; or investigates mobservice1 while dbservice2 has more metric alerts.
+    Signals: Chosen evidence is seemingly arbitrary and does not follow logical selection procedures: earliest/most frequent/highest volume/multi-modal.
+    Annotation rule: If model's chosen evidence subset is plausibly arbitrary or contradicts simple triage heuristics and that choice affected the top hypothesis or multiple hypotheses → mark RF-07 (higher severity). If it did not materially change outcome → mark with low severity.
+    Severity: 1-5
+      - 1 = present for 1 hypothesis
+      - 3 = present for 2 hypotheses
+      - 5 = present in all 3 hypotheses
+
+    ### RF-08 — Evidential insufficiency (supported but weak / non-specific for the claim)
+
+    Scope: per-hypothesis (evidence sufficiency)
+    Definition: Evidence exists but its temporal precision, frequency, mechanism link, discriminability, provenance clarity, or granularity is insufficient to support the specific claim. This is an inferential-sufficiency error, not a hallucination.
+    Signals: Checklist failures: temporal precedence; frequency; mechanism; discriminability; provenance clarity; granularity alignment.
+    Annotation rule: After prior per-hypothesis checks, apply Sufficiency Checklist; if required items fail for claim type, mark RF-08 and provide model claim(s) + matched alert(s) + list which checklist items failed.
+    Severity: 1-5
+      - 1 = single insufficiency in 1 hypothesis
+      - 2 = multiple occurrences in 1 hypothesis
+      - 3 = single occurrence in 2 hypotheses
+      - 4 = multiple occurrences in 2 hypotheses
+      - 5 = present in all 3+ hypotheses
+
+    ### RF-09 — Failure to update belief (non-monotonic updating error)
+
+    Scope: full-history
+    Definition: Model does not revise or retract a previous claim after later evidence or Tool Message contradicts it. This is specifically a failure to update in light of new evidence (distinct from anchoring, which is failure to explore alternatives).
+    Example: Claims Redis eviction; later Tool Message shows normal Redis; final answer still claims eviction. Speculates webservice2 is hosted on host4 and therefore failures on host4 affect webservice2; later Tool Message shows webservice is hosted on host2; final answer still includes basis of webservice2 being hosted on host4.
+    Signals: Later Tool Messages/alerts contradict earlier claims, and claims persist.
+    Annotation rule: Extract the original claim and the contradicting evidence; if model fails to revise → mark RF-09. Severity high if final answer relies on unchanged, contradicted claim.
+    Severity: 1-5
+      - 1 = single untrue claim impacts 1 hypothesis
+      - 2 = multiple impact 1 hypothesis
+      - 3 = single impacts 2 hypotheses
+      - 4 = multiple impact 2 hypotheses
+      - 5 = untrue claim(s) impact all 3 hypotheses
+
+    ### RF-10 — Simulation / role confusion (pretend tool output used as factual evidence)
+
+    Scope: full-history
+    Definition: Model explicitly states it cannot call tools and "assumes" or "simulates" tool outputs, then treats simulated outputs as factual in final conclusions. Consider a Tool Message "real" if there is an explicit tool header like "==== Tool Message ====" (allowing variable '=' counts).
+    Example: "I cannot call the tools; I will assume the log shows ERROR: connection refused"; final answer treats the assumed log as observed.
+    Signals: Phrases like: "I cannot call", "I can't call", "I'll assume", "I will pretend", "simulate the response", "assume the tool returns", followed by conclusive claims. No Tool Message corresponding to the assumed call.
+    Annotation rule: Consider all text prior to the final answer and search for signal phrases and Tool Messages. If simulated outputs are used as factual evidence without a Tool Message, mark RF-10. If simulated exploration was not used as final evidence or Tool Messages were later present, mark RF-10 but lower severity.
+    Severity: 1-5
+      - 1 = simulated output noted, but not used for final claims
+      - 2 = simulated output used for a secondary claim only
+      - 3 = simulated output(s) used as evidence for 1 hypothesis
+      - 4 = simulated output(s) across 2 hypotheses
+      - 5 = simulated output(s) are the core evidence for 3+ hypotheses
+
+    ### RF-11 — Excessive speculative / rambling reasoning (ungrounded token waste)
+
+    Scope: full-history
+    Definition: Considerable portion of the chat is spent being confused or speculating about the system architecture, knowledge graph, meaning/semantics of the alerts, available tools, and deciding what steps to take instead of performing tool calls to confirm/refute KG characteristics or check evidence; especially when tools were available but unused.
+    Example: KG-schema theorizing while no Tool Messages are present to confirm/refute KG characteristics.
+    Signals: High density of hedging or rambling language (including "wait"); paragraphs without alert/metric/log/trace citations; round-about or circular thoughts; none-to-little Tool Message usage.
+    Annotation rule: Consider all text prior to the final answer and search for hedging or speculative language. If high and blocked/replaced necessary data checks OR prevented a conclusive unstructured final answer, mark RF-11.
+    Severity: 3-5
+      - 3 = heavy speculation/rambling, blocked some important checks
+      - 4 = very heavy speculation/rambling, significantly blocked analysis and tests
+      - 5 = entire session dominated by speculation/rambling, no meaningful evidence work, final answer driven by speculation
+
+    ### RF-12 — Repetition / failure to resume (looping across turns)
+
+    Scope: full-history
+    Definition: Model repeats the same planning, intro text, or deliberation across consecutive replies and fails to resume earlier progress, typically after truncation.
+    Example: Consecutive replies (marked by "--- AI Message ---") begin with similar "First I will check…" paragraphs and add little new content. Consecutive replies contain similar deliberation about the semantics of a 'down'/'up' metric alert.
+    Signals: High n-gram overlap across AI messages; or repeated planning text.
+    Annotation rule: If repetition caused stalled progress or omitted checks, mark RF-12.
+    Severity: 3-5
+      - 3 = repetition across multiple turns omitted some checks
+      - 4 = repetition stalled significant parts of the analysis
+      - 5 = repetition prevented completion and changed final answer
+
+    ### RF-13 — Anchoring / premature commitment (insufficient hypothesis exploration)
+
+    Scope: cross-cutting (search behaviour)
+    Definition: Model fixates early on a single hypothesis and fails to enumerate OR to explore other plausible alternatives/hypotheses (e.g., component or type of fault).
+    Example: Model immediately focuses on "high memory usage" as the cause and never lists or considers other plausible causes (e.g., network, disk) despite relevant alerts. Model claims it should explore host relationships for loginservice2, webservice1, and dbservice2; calls the tool for loginservice2; does not follow-through for webservice1 and dbservice2.
+    Signals: <2 reasonable alternatives (w.r.t. component or fault type) listed across chat; no follow-through on planned exploration without good rationale.
+    Annotation rule: If the model provides fewer than 2 reasonable alternative hypotheses and goes straight to a definitive cause, mark RF-13. Only consider RF-13 if there was an opportunity to explore (i.e., through tools, using the reasoning fields, think tags <think></think>, etc.).
+    Severity: 3-5
+      - 3 = some diversity in planned exploration and some follow-through
+      - 4 = some diversity in planned exploration but no-follow through
+      - 5 = anchoring dominated the analysis and impacted all hypothesis
+
+    ### RF-14 — Invalid logical inference patterns (formal fallacies)
+
+    Scope: cross-cutting (invalid inference)
+    Definition: Model applies invalid inference patterns in deriving diagnostic claims. Look for: affirming the consequent, denying the antecedent, post hoc, composition/division, ecological fallacy, hasty generalization.
+    Example: Model sees one trace with a 500 for endpoint /login on a single instance and concludes "the whole service is down" (hasty generalization).
+    Signals: Clear leap from limited premises to broad/systemic conclusion without intermediate mechanism or checks.
+    Annotation rule: Identify fallacy, quote the premise(s) and conclusion, mark RF-14.
+    Severity: 1-5
+      - 1 = single minor fallacy with negligible impact
+      - 2 = multiple minor fallacies with negligible impact
+      - 3 = fallacy(s) used to support 1 hypothesis
+      - 4 = fallacy(s) used to support 2 hypothesis
+      - 5 = fallacies pervasive across all 3+ hypotheses
+
+    ### RF-15 — Internal contradiction (explicit inconsistency)
+
+    Scope: cross-cutting
+    Definition: Model makes mutually incompatible statements in the chat history. This is different from RF-09: RF-15 is explicit contradiction rather than failure to revise.
+    Example: "No trace 500 errors", then "multiple 500 trace errors".
+    Signals: Pairwise contradictory sentences when compared; contradiction can be related (but not limited) to a metric, timestamp, evidence existence, component relationships, etc.
+    Annotation rule: Quote contradictions, mark RF-15.
+    Severity: 
+      - 1 = single contradiction with negligible impact
+      - 2 = multiple contradictions with negligible impact
+      - 3 = contradiction(s) impact 1 hypothesis
+      - 4 = contradiction(s) impact 2 hypotheses
+      - 5 = contradiction(s) impact 3+ hypotheses
+
+    ### RF-16 — Arithmetic / aggregation mistake
+
+    Scope: cross-cutting
+    Definition: Numeric miscalculations or wrong aggregations that change interpretation.
+    Example: Reports “error rate increased 200%” when correct is 20%.
+    Signals: Numeric expressions in the text; automatic recomputation disagrees with reported number.
+    Annotation rule: Recompute numeric or aggregation claims; if inconsistent and materially affects conclusions, mark RF-16 + include corrected value. (Severity generally low unless numeric error changed final diagnosis.)
+    Severity: 1-5
+      - 1 = single small numeric mismatch with negligible impact
+      - 2 = multiple minor numeric mismatches with negligible impact
+      - 3 = numeric/aggregation error(s) that impacts 1 hypothesis
+      - 4 = numeric/aggregation error(s) that impact 2 hypotheses
+      - 5 = numeric/aggregation error(s) that impact 3+ hypothesis
+
+    ## TASK
+    Your task is to label the given reasoning by an LLM agent below according to the failure taxonomy.
+
+    ### ANNOTATION GUIDE -- practical rules
+    1. Multilabel: Assign all RFs that apply.
+    2. RF-00 precedence: If the structured final response (JSON) is None or nan, do NOT mark RF-00. Otherwise, compare the unstructured final answer with the structured final response; if divergent, mark RF-00 and use the unstructured final answer as the basis for the rest of the annotation.
+    3. Tool message rule: If the chat contains a real Tool Message corresponding to the claimed tool call → treat associated evidence as real. If the model claimed a call but no Tool Message exists and the model used the assumed output as fact → consider RF-10. Consider a Tool Message "real" if there is an explicit tool header like "==== Tool Message ====" (allowing variable '=' counts).
+    4. Document evidence: For every RF, paste the triggering model sentence(s) and the matched alert(s) or NO MATCH FOUND.
+    5. Severity per RF (1-5): Give severity for each RF assigned.
+    6. Ground-truth is context only: Do not mark RFs solely because the model disagrees with ground truth; only flag when model claims/presents evidence incorrectly relative to accessible context.
+    
+    ### ANNOTATION WORKFLOW (step-by-step)
+    Step 1 — Global gate
+    1. Compare final structured output response vs final unstructured answer → mark RF-00 if divergent; record severity.
+
+    Step 2 — Per-hypothesis loop (for each hypothesis in the final answer, process top-1 first)
+    2. RF-01: quick-scan up to 3 times for EACH ; if no match → RF-01 for that hypothesis → stop per-hypothesis checks for *this* hypothesis.
+    3. RF-02: if metric alerts used, verify semantics; if inverted/misread → RF-02.
+    4. RF-03: examine provenance; if model blames observer despite propagation language → RF-03.
+    5. RF-04: compare timestamps; if cause occurs after effect → RF-04.
+    6. RF-05: evaluate causal mechanism vs KG/alerts; if mechanism relies on non-existent KG edges or is otherwise unsupported/not plausible → RF-05.
+    7. RF-06: if model claims instance-level root cause location, verify unique per-instance multi-modal evidence; if absent → RF-06.
+    8. RF-07: assess whether chosen evidence selection contradicts simple triage heuristics and whether selection changed conclusions; if so → RF-07 (severity scaled by impact).
+    9. RF-08: apply Sufficiency Checklist (Temporal, Frequency, Mechanism, Discriminability, Provenance, Granularity); if required items fail for claim type → RF-08.
+
+    Step 3 — Full-history checks (scan all "AI Message" and "Tool Message" instances prior to the Final Answer/Response)
+    10. MANDATORY: perform a full history scan and search for evidence for RF-09-RF-12. Produce a compact "Full History Summary" of the LLM agent's behaviour. Provide exact quote(s) (verbatim) to support RF-09-RF-12.
+    11. RF-09: scan chronological history for later Tool Messages/alerts that contradict earlier claims; if no revision → RF-09.
+    12. RF-10: detect simulated tool outputs used as facts without Tool Message → RF-10.
+    13. RF-11: measure speculative text percentage; if >30% and blocked checks → RF-11.
+    14. RF-12: detect repeated planning text that stalled progress → RF-12.
+
+    Step 4 — Cross-cutting checks (scan the entire chat history)
+    15. MANDATORY: perform an entire chat history scan and search for evidence for RF-13-RF-16.
+    16. RF-13: did the agent ever enumerate ≥2 plausible alternatives? If not → RF-13.
+    17. RF-14: detect formal fallacies anywhere → RF-14.
+    18. RF-15: find explicit contradictions elsewhere → RF-15.
+    19. RF-16: recompute numeric claims or aggregations across chat; if mismatches materially affect reasoning → RF-16.
+
+    Step 5 — Finalize
+    20. Assign all applicable RFs and record per-RF severity (1-5). For the per-hypothesis RFs, make sure the severity accurately reflects the number of occurrences across hypotheses.
+    21. Out of the RFs identified, list the RFs that directly affected/impacted the #1 hypothesis.
+    22. Output a json object (using (```json) and (```) as delimiters) with the Failures Identified Output Schema.
+
+    ### FAILURES IDENTIFIED OUTPUT SCHEMA
+    ```json
+    {{
+      "failures_identified": [
+        {{
+          "type": "The RF identifier, e.g. 'RF-01'",
+          "model_claim": "Model claim or behaviour in the chat history the supports the RF",
+          "rationale": "A description of the issue and a justification/rationale that the RF applies",
+          "severity": "Severity of the RF."
+        }},
+        ...
+      ],
+      "affected_top_hypothesis": "List of RFs that directly affected the #1 hypothesis, e.g., ['RF-01', 'RF-13']"
+    }}
+    ```
+
+    Below is the original root cause analysis task and the associated 'final response' (the LLM'm structured output), all enclosed in <begin chat history> and <end chat history>.
+    The ground-truth root cause for this scenario was: {root_cause_location} (location) and {root_cause_type} (type).
+
+    Work through the annotation workflow step by step.
+    
+    <begin chat history>
+    {chat_history}
+
+    Final response (structured output):
+    ```json
+    {final_answer}
+    ```
+    <end chat history>
