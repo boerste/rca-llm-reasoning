@@ -1,0 +1,120 @@
+GAIA:
+  telemetry-data: "../GAIA-DataSet/MicroSS/"
+  processed-data: "../GAIA-DataSet/MicroSS/processed/"
+  fault-alert-data: "data/fault-alerts/MicroSS/"
+
+  traces-path: "trace/trace"
+  logs-path: "business/business"
+  metrics-path: "metric/metric"
+  original-run-table: "run/run/run_table_2021-07.csv"
+
+  run-table: "data/fault-alerts/MicroSS/run_table.csv"
+  gt-file: "data/fault-alerts/MicroSS/label.csv"
+  system: "MicroSS"
+
+  max-logs-per-id: 5
+  low-freq-p: 0.5
+  add-time-to-log-message: False
+  timezone: "Asia/Shanghai"
+  
+  oracle-kpis: []
+
+  # For dataset balancing (during prep)
+  augmentations-per-fault: 3
+  augmented-faults-st-time: 1630429200000 # in ms -- 2021-09-01 01:00:00.000 GMT+8 -- outside the data collection period
+  augmented-faults-spacing: 120000 # 2 min in ms
+
+OpenRCA-Market-cloudbed-1:
+  telemetry-data: "../OpenRCA/dataset/Market/cloudbed-1"
+  processed-data: "../OpenRCA/dataset/Market/cloudbed-1/telemetry/processed"
+  fault-alert-data: "data/fault-alerts/Online-Boutique-cloudbed-1"
+
+  traces-path: "telemetry/*/trace"
+  logs-path: "telemetry/*/log"
+  metrics-path: "telemetry/*/metric"
+  original-labels: "record.csv"
+
+  normal-period:
+    start: 1647619200000 # in ms -- 2022-03-19 00:00:00.000 GMT+8
+    end: 1647705599999 # in ms -- 2022-03-19 23:59:59.999 GMT+8
+
+  gt-file: "data/fault-alerts/Online-Boutique-cloudbed-1/label.csv"
+  system: "Online-Boutique-cloudbed-1"
+
+  max-logs-per-id: 3
+  low-freq-p: 0.5
+  add-time-to-log-message: True
+  timezone: "Asia/Shanghai"
+
+  oracle-kpis: [
+    "container_threads", # process
+    "container_cpu_usage_seconds", "system.cpu.pct_usage", # cpu
+    "system.mem.used", "container_memory_usage_MB", #mem
+    "container_fs_reads./dev/vda", "container_fs_writes./dev/vda", "system.io.r_s", "system.io.w_s", "container_fs_writes./dev/vda1", "system.disk.used", "system.disk.pct_usage", # io
+    "container_network_receive_packets.eth0", "container_network_receive_MB.eth0",  "recommendationservice-grpc", "frontend-http", "cartservice-grpc", "checkoutservice-grpc", "productcatalogservice-grpc", "emailservice-grpc", "adservice-grpc" #net
+  ]
+
+  # For dataset prep
+  normal-telemetry-data: "../aiops2022/normal/cloudbed-1" # separate from the OpenRCA dataset -- used to train detectors
+  normal-traces-path: "trace/all"
+  normal-logs-path: "log/all"
+  normal-metrics-path: "metric"
+
+OpenRCA-Market-cloudbed-2:
+  telemetry-data: "../OpenRCA/dataset/Market/cloudbed-2"
+  processed-data: "../OpenRCA/dataset/Market/cloudbed-2/telemetry/processed"
+  fault-alert-data: "data/fault-alerts/Online-Boutique-cloudbed-2"
+
+  traces-path: "telemetry/*/trace"
+  logs-path: "telemetry/*/log"
+  metrics-path: "telemetry/*/metric"
+  original-labels: "record.csv"
+
+  normal-period:
+    start: 1647619200000 # in ms -- 2022-03-19 00:00:00.000 GMT+8
+    end: 1647705599999 # in ms -- 2022-03-19 23:59:59.999 GMT+8
+
+  gt-file: "data/fault-alerts/Online-Boutique-cloudbed-2/label.csv"
+  system: "Online-Boutique-cloudbed-2"
+
+  max-logs-per-id: 3
+  low-freq-p: 0.57
+  add-time-to-log-message: True
+  timezone: "Asia/Shanghai"
+
+  oracle-kpis: [
+    "container_threads", # process
+    "container_cpu_usage_seconds", "system.cpu.pct_usage", # cpu
+    "system.mem.used", "container_memory_usage_MB", #mem
+    "container_fs_reads./dev/vda", "container_fs_writes./dev/vda", "system.io.r_s", "system.io.w_s", "container_fs_writes./dev/vda1", "system.disk.used", "system.disk.pct_usage", # io
+    "container_network_receive_packets.eth0", "container_network_receive_MB.eth0",  "recommendationservice-grpc", "frontend-http", "cartservice-grpc", "checkoutservice-grpc", "productcatalogservice-grpc", "emailservice-grpc", "adservice-grpc" #net
+  ]
+  
+  # For dataset prep
+  normal-telemetry-data: "../aiops2022/normal/cloudbed-2" # separate from the OpenRCA dataset -- used to train detectors
+  normal-traces-path: "trace/all"
+  normal-logs-path: "log/all"
+  normal-metrics-path: "metric"
+
+OpenRCA-Telecom:
+  telemetry-data: "../OpenRCA/dataset/telecom"
+  processed-data: "../OpenRCA/dataset/telecom/telemetry/processed"
+  fault-alert-data: "data/fault-alerts/Telecom"
+
+  traces-path: "telemetry/*/trace"
+  metrics-path: "telemetry/*/metric"
+  logs-path: "telemetry/*/log" # PLACEHOLDER - no logs exist for this dataset
+  original-labels: "record.csv"
+
+  gt-file: "data/fault-alerts/Telecom/label.csv"
+  system: "Telecom"
+
+  timezone: "Asia/Shanghai"
+
+  oracle-kpis: [
+    "Proc_Used_Pct", "Sess_Connect", "Proc_User_Used_Pct", "On_Off_State", "tnsping_result_time", # db
+    "container_cpu_used", # cpu
+    "Memory_used_pct", # mem
+    "Disk_io_util", # io
+    "Sent_queue", "Received_queue", # net
+  ]
