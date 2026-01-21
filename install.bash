@@ -62,7 +62,7 @@ fi
 # ensure the micromamba is available
 eval "$(${MAMBA_EXE} shell hook --shell bash)"
 
-CHANNELS="-c pytorch -c nvidia -c conda-forge"
+CHANNELS="-c conda-forge"
 
 if [[ $ARG_ENV_CREATE == "true" ]]; then
     ${MAMBA_EXE} create -n "${ENV_NAME}" ${CHANNELS} ${ARG_YES} python=3.12
@@ -73,7 +73,7 @@ LLAMA_ENV_PREFIX=${MAMBA_ROOT_PREFIX}/envs/${ENV_NAME}/
 if [[ $ARG_DEPS == "true" ]]; then
     ${MAMBA_EXE} -n "${ENV_NAME}" install ${ARG_YES} \
         pytorch pytorch-cuda==12.4 cuda==12.4 \
-        transformers evaluate accelerate pandas tqdm networkx numpy scikit-learn \
+        ollama transformers evaluate accelerate pandas tqdm networkx numpy scikit-learn \
         ipykernel ipywidgets \
         ${CHANNELS}
 
