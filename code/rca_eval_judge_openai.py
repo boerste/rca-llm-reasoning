@@ -42,7 +42,6 @@ import time
 import glob
 from openai import OpenAI
 from openai.types import FileObject, Batch
-from tqdm import tqdm
 from langchain_core.messages import BaseMessage
 from typing import List
 

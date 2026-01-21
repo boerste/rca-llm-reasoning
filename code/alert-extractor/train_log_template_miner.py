@@ -24,9 +24,9 @@ Outputs:
 - fault-alert-data/log/drain-templates.csv with columns [id, template, count]
 
 Examples:
-    # python code/extractor/train_log_template_miner.py --config code/extractor/config.yaml --dataset GAIA
-    # python code/extractor/train_log_template_miner.py --config code/extractor/config.yaml --dataset "OpenRCA-Market-cloudbed-1"
-    # python code/extractor/train_log_template_miner.py --config code/extractor/config.yaml --dataset "OpenRCA-Market-cloudbed-2"
+    # python code/alert-extractor/train_log_template_miner.py --config code/alert-extractor/config.yaml --dataset GAIA
+    # python code/alert-extractor/train_log_template_miner.py --config code/alert-extractor/config.yaml --dataset "OpenRCA-Market-cloudbed-1"
+    # python code/alert-extractor/train_log_template_miner.py --config code/alert-extractor/config.yaml --dataset "OpenRCA-Market-cloudbed-2"
 """
 import os
 import argparse
@@ -91,7 +91,7 @@ def main():
     - and writes a template summary CSV to the fault alert directory.
     """
     parser = argparse.ArgumentParser(description="Extract log templates using Drain.")
-    parser.add_argument("--config", type=str, default="code/extractor/config.yaml", help="Path to config file.")
+    parser.add_argument("--config", type=str, default="code/alert-extractor/config.yaml", help="Path to config file.")
     parser.add_argument("--dataset", type=str, default="OpenRCA-Market-cloudbed-1", help="Dataset to process.")
     args = parser.parse_args()
 
@@ -135,8 +135,8 @@ def main():
     )
     logger.info("Log template extraction complete.")
 
-# python code/extractor/train_log_template_miner.py --config code/extractor/config.yaml --dataset GAIA
-# python code/extractor/train_log_template_miner.py --config code/extractor/config.yaml --dataset "OpenRCA-Market-cloudbed-1"
-# python code/extractor/train_log_template_miner.py --config code/extractor/config.yaml --dataset "OpenRCA-Market-cloudbed-2"
+# python code/alert-extractor/train_log_template_miner.py --config code/alert-extractor/config.yaml --dataset GAIA
+# python code/alert-extractor/train_log_template_miner.py --config code/alert-extractor/config.yaml --dataset "OpenRCA-Market-cloudbed-1"
+# python code/alert-extractor/train_log_template_miner.py --config code/alert-extractor/config.yaml --dataset "OpenRCA-Market-cloudbed-2"
 if __name__ == "__main__":
     main()

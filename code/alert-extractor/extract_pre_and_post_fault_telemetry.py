@@ -25,9 +25,9 @@ Outputs:
 - processed-data/normal-data/ when normal-period is defined
 
 Examples:
-    python code/extractor/extract_pre_and_post_fault_telemetry.py --config code/extractor/config.yaml --dataset GAIA
-    python code/extractor/extract_pre_and_post_fault_telemetry.py --config code/extractor/config.yaml --dataset OpenRCA-Market-cloudbed-1
-    python code/extractor/extract_pre_and_post_fault_telemetry.py --config code/extractor/config.yaml --dataset OpenRCA-Market-cloudbed-2
+    python code/alert-extractor/extract_pre_and_post_fault_telemetry.py --config code/alert-extractor/config.yaml --dataset GAIA
+    python code/alert-extractor/extract_pre_and_post_fault_telemetry.py --config code/alert-extractor/config.yaml --dataset OpenRCA-Market-cloudbed-1
+    python code/alert-extractor/extract_pre_and_post_fault_telemetry.py --config code/alert-extractor/config.yaml --dataset OpenRCA-Market-cloudbed-2
 """
 import os
 import pandas as pd
@@ -584,7 +584,7 @@ def main():
         None
     """
     parser = argparse.ArgumentParser(description="Pre-processes logs, metrics, and traces into pre- and post-failure segments.")
-    parser.add_argument("--config", type=str, default="code/extractor/config.yaml", help="Path to config file.")
+    parser.add_argument("--config", type=str, default="code/alert-extractor/config.yaml", help="Path to config file.")
     parser.add_argument("--dataset", type=str, default="GAIA", help="Dataset to process.")
     args = parser.parse_args()
     
@@ -711,6 +711,6 @@ def main():
     
     logger.info(f"Completed processing.")
 
-# python extract_pre_and_post_fault_telemetry.py --config code/extractor/config.yaml --dataset GAIA
+# python extract_pre_and_post_fault_telemetry.py --config code/alert-extractor/config.yaml --dataset GAIA
 if __name__ == "__main__":
     main()

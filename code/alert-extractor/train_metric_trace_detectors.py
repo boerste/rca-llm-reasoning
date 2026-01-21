@@ -222,7 +222,7 @@ def main():
     - and saves artifacts to the detector dir.
     """
     parser = argparse.ArgumentParser(description="Train metric and trace detectors from pre-failure data.")
-    parser.add_argument("--config", type=str, default="code/extractor/config.yaml", help="Path to config YAML.")
+    parser.add_argument("--config", type=str, default="code/alert-extractor/config.yaml", help="Path to config YAML.")
     parser.add_argument("--dataset", type=str, default="OpenRCA-Market-cloudbed-1", help="Dataset name in config.")
     parser.add_argument("--stage", type=str, default="both", choices=["prepare", "train", "both"], help="Which stage to run.")
     args = parser.parse_args()
@@ -288,8 +288,8 @@ def main():
 
     logger.info(f"Finished detector training. Results saved to {detector_dir}")
 
-# python code/extractor/train_metric_trace_detectors.py --config code/extractor/config.yaml --dataset GAIA --stage both
-# python code/extractor/train_metric_trace_detectors.py --config code/extractor/config.yaml --dataset "OpenRCA-Market-cloudbed-1" --stage both
-# python code/extractor/train_metric_trace_detectors.py --config code/extractor/config.yaml --dataset "OpenRCA-Market-cloudbed-2" --stage both
+# python code/alert-extractor/train_metric_trace_detectors.py --config code/alert-extractor/config.yaml --dataset GAIA --stage both
+# python code/alert-extractor/train_metric_trace_detectors.py --config code/alert-extractor/config.yaml --dataset "OpenRCA-Market-cloudbed-1" --stage both
+# python code/alert-extractor/train_metric_trace_detectors.py --config code/alert-extractor/config.yaml --dataset "OpenRCA-Market-cloudbed-2" --stage both
 if __name__ == "__main__":
     main()

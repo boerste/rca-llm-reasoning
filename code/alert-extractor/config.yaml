@@ -1,6 +1,6 @@
 GAIA:
   telemetry-data: "../GAIA-DataSet/MicroSS/"
-  processed-data: "../GAIA-DataSet/MicroSS/processed/"
+  processed-data: "../GAIA-DataSet/MicroSS/processed-6/"
   fault-alert-data: "data/fault-alerts/MicroSS/"
 
   traces-path: "trace/trace"
@@ -89,3 +89,9 @@ OpenRCA-Market-cloudbed-2:
     "container_fs_reads./dev/vda", "container_fs_writes./dev/vda", "system.io.r_s", "system.io.w_s", "container_fs_writes./dev/vda1", "system.disk.used", "system.disk.pct_usage", # io
     "container_network_receive_packets.eth0", "container_network_receive_MB.eth0",  "recommendationservice-grpc", "frontend-http", "cartservice-grpc", "checkoutservice-grpc", "productcatalogservice-grpc", "emailservice-grpc", "adservice-grpc" #net
   ]
+
+  # For dataset prep
+  normal-telemetry-data: "../aiops2022/normal/cloudbed-2" # separate from the OpenRCA dataset -- used to train detectors
+  normal-traces-path: "trace/all"
+  normal-logs-path: "log/all"
+  normal-metrics-path: "metric"

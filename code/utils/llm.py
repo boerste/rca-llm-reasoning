@@ -1,14 +1,7 @@
 import os
 import json
-import torch
 import ast
 from dataclasses import dataclass
-from transformers import (
-    pipeline,
-    Pipeline
-)
-from langchain_huggingface.llms import HuggingFacePipeline
-from langchain_huggingface import ChatHuggingFace
 from langchain_ollama import ChatOllama
 from langchain_openai import ChatOpenAI
 from langchain_core.load import dumps, loads
@@ -108,60 +101,6 @@ class ExecutedToolCall:
     @classmethod
     def from_string(cls, json_str: str):
         return cls(**json.loads(json_str))
-
-
-def load_model(model_name, device_map = "auto") -> Pipeline:
-    """
-    Standard way to load LLM from HuggingFace using pipeline from model name
-
-    Args:
-        model_name: HuggingFace model name. Examples: microsoft/Phi-3-mini-4k-instruct, meta-llama/Llama-2-13b-chat-hf, meta-llama/Llama-3.1-8B-Instruct, meta-llama/Llama-3.2-3B-Instruct
-        device_map: device map. Defaults to "auto".
-
-    Returns:
-        HuggingFace pipeline
-    """    
-    print("Loading model using HuggingFace Pipeline...")
-    # to prevent CUDA OOM due to memory fragmentation
-    os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
-    pipe: Pipeline = pipeline("text-generation", model=model_name, torch_dtype=torch.bfloat16, device_map=device_map)
-    print(f"{model_name} loaded successfully to {device_map}")
-    return pipe
-
-def model_generate(pipe, prompt, max_new_tokens = 512):
-    """
-    Generate text using a HuggingFace pipeline.
-
-    Args:
-        pipe (Pipeline): The HuggingFace generation pipeline.
-        prompt (str): The input prompt for generation.
-        max_new_tokens (int): The maximum number of new tokens to generate. Defaults to 512.
-
-    Returns:
-        str: The generated text.
-    """
-    response = pipe(prompt, max_new_tokens=max_new_tokens)
-    return response[0]['generated_text']
-
-def load_model_LC_from_HF(model_name, device_map = "auto") -> ChatHuggingFace:
-    """
-    Loads model as a Langchain model from a HuggingFace Pipeline.
-    Note: this does not work for tool calling. From documentation: "Only supports text-generation, text2text-generation, summarization and translation for now."
-    See: https://github.com/langchain-ai/langchain/issues/22379, https://github.com/langchain-ai/langchain/issues/24430
-    Args:
-        model_name: HuggingFace model name. 
-            Examples: microsoft/Phi-3-mini-4k-instruct, meta-llama/Llama-2-13b-chat-hf, meta-llama/Llama-3.1-8B-Instruct.
-        device_map: device map. Defaults to "auto".
-
-    Returns:
-       ChatHuggingFace: Langchain chat model loaded from HuggingFace Pipeline.
-    """    
-    print(f"Loading {model_name} model using Langchain ChatHuggingFace...")
-
-    hf_pipe: HuggingFacePipeline = load_model(model_name, device_map)
-    chat_model = ChatHuggingFace(llm=hf_pipe)
-    chat_model.llm.pipeline.tokenizer.pad_token_id = chat_model.llm.pipeline.tokenizer.eos_token_id
-    return chat_model
 
 def load_model_ollama(model_name = 'llama3.1:8b', max_new_tokens = 2048, num_ctx = 14848, reasoning=None) -> ChatOllama:
     """

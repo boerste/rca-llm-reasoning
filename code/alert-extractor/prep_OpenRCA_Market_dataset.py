@@ -109,7 +109,7 @@ def main():
     - copies or collapses normal (non-anomalous) telemetry into the dataset directory under telemetry/normal.
     """
     parser = argparse.ArgumentParser(description="")
-    parser.add_argument('--config', default="code/extractor/config.yaml", type=str, help="Path to config file.")
+    parser.add_argument('--config', default="code/alert-extractor/config.yaml", type=str, help="Path to config file.")
     parser.add_argument('--dataset', default="OpenRCA-Market-cloudbed-2", type=str)
     args = parser.parse_args()
     dataset = args.dataset

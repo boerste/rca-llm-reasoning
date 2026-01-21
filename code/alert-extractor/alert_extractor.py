@@ -59,7 +59,7 @@ def main():
         None
     """
     parser = argparse.ArgumentParser(description="Alert Extraction")
-    parser.add_argument('--config', default="code/extractor/config.yaml", type=str, help="Path to config file.")
+    parser.add_argument('--config', default="code/alert-extractor/config.yaml", type=str, help="Path to config file.")
     parser.add_argument('--dataset', default="OpenRCA-Market", type=str, help="Dataset to process.")
     args = parser.parse_args()
 
@@ -238,6 +238,6 @@ def main():
     logger.info(f'Alert extraction completed!')
     logger.info(f'Total time taken: {(time.time() - start_time) / 60} minutes')
 
-# python code/extractor/alert_extractor.py --config code/extractor/config.yaml --dataset GAIA
+# python code/alert-extractor/alert_extractor.py --config code/alert-extractor/config.yaml --dataset GAIA
 if __name__ == "__main__":
     main()

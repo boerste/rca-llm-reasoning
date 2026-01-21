@@ -171,7 +171,7 @@ def extract_telemetry_gaps(metrics_dir, traces_dir, logs_dir, save_file):
                     timestamps = np.append(timestamps, time_cutoff)
                     
                 for i in range(1, len(timestamps)):
-                    start, end = timestamps[i - 1], timestamps[i]
+                    start, end = int(timestamps[i - 1]), int(timestamps[i])
                     if (end - start) > TIME_GAP_THRESHOLD:
                         service = extract_service_name(filename, data_type)
                         if service not in gap_groups[(start, end)]:
@@ -439,7 +439,7 @@ def main():
     Writes outputs to the GAIA fault alert directory.
     """
     parser = argparse.ArgumentParser(description="")
-    parser.add_argument('--config', default="code/extractor/config.yaml", type=str, help="Path to config file.")
+    parser.add_argument('--config', default="code/alert-extractor/config.yaml", type=str, help="Path to config file.")
 
     args = parser.parse_args()
     config = load_config(args.config)["GAIA"]
