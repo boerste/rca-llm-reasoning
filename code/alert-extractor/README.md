@@ -9,7 +9,6 @@ Alert Extraction turns raw telemetry and injected-fault labels into compact metr
 2. **Dataset prep**: normalize/standardize labels using the appropriate prep script
     - [prep_GAIA_dataset.py](prep_GAIA_dataset.py)
     - [prep_OpenRCA_Market_dataset.py](prep_OpenRCA_Market_dataset.py)
-    - [prep_OpenRCA_Telecom_dataset.py](prep_OpenRCA_Telecom_dataset.py)
 3. **Fault telemetry prep**: process telemetry and slice pre- and post-fault windows with [extract_pre_and_post_fault_telemetry.py](extract_pre_and_post_fault_telemetry.py).
 4. **Train detectors**: 
     - Fit metric and trace detectors with [train_metric_trace_detectors.py](train_metric_trace_detectors.py).

@@ -2,14 +2,14 @@
 Extract Pre- and Post-Fault Telemetry Data
 
 Purpose:
-- Process raw traces, logs, and metrics from supported datasets (GAIA, OpenRCA-Market, OpenRCA-Telecom)
+- Process raw traces, logs, and metrics from supported datasets (GAIA, OpenRCA-Market)
 - Standardize fields and persist unified processed artifacts
 - Slice pre- and post-fault telemetry windows per fault for downstream RCA and detector training
 
 Prerequisites:
 - Dataset has been downloaded locally and paths configured in the alert-extractor config.yaml
 - Each dataset has been 'prepped' according to their respective 'prep' script
-  (prep_GAIA_dataset.py, prep_OpenRCA_Market_dataset.py, or prep_OpenRCA_Telecom_dataset.py);
+  (prep_GAIA_dataset.py, prep_OpenRCA_Market_dataset.py);
 - Optional normal-period can be provided to export a baseline normal window
 
 Workflow:
@@ -60,7 +60,7 @@ def process_traces(dir, save_dir, dataset, timezone):
     Args:
         dir (str): Root directory containing raw trace CSV files.
         save_dir (str): Destination directory for processed artifacts.
-        dataset (str): Dataset name, one of GAIA, OpenRCA-Market*, OpenRCA-Telecom.
+        dataset (str): Dataset name, one of GAIA, OpenRCA-Market*.
         timezone (str): Timezone string used to convert GAIA timestamps to epoch ms.
 
     Returns:
@@ -71,7 +71,7 @@ def process_traces(dir, save_dir, dataset, timezone):
         if dataset == "GAIA":
             trace_files = [os.path.join(dir, f) for f in os.listdir(dir) if f.endswith("2021-07.csv")]
             logger.info(f"Found {len(trace_files)} trace files in {dir} (only data from 2021-07)")
-        if ("OpenRCA-Market" in dataset) or ("OpenRCA-Telecom" == dataset):
+        if ("OpenRCA-Market" in dataset):
             trace_files = glob.glob(os.path.join(dir, "*"))
             logger.info(f"Found {len(trace_files)} trace files in {dir}")
         
@@ -132,42 +132,6 @@ def process_traces(dir, save_dir, dataset, timezone):
                 'start_time', 'end_time', 'duration',
                 'service_name', 'operation', 'status_code'
             ]]
-        elif "OpenRCA-Telecom" == dataset:
-            # startTime and elapsedTime are in ms -- no action
-            
-            df = df.rename(columns={
-                'startTime': 'start_time',
-                'elapsedTime': 'duration',
-                'cmdb_id': 'service_name',
-                'traceId': 'trace_id',
-                'id': 'span_id',
-                'pid': 'parent_span_id',
-                'serviceName': 'operation',
-                'callType': 'type',
-            })
-            
-            # dsName is one of: db_009, db_007, db_003 (cmdb_id and dsName pairs stay true to topology graph) -- no action?
-            
-            df['timestamp'] = df['start_time']
-            df['end_time'] = df['start_time'] + df['duration']
-            
-            # 'success' column contains booleans => convert 'True'=>'200' and 'False'=>'500'
-            def map_status_code(val):
-                """Map existing success boolean to standardized 200/400/500"""
-                if val or (val == "True"):
-                    return 200
-                else:
-                    return 500
-            df['status_code'] = df['success'].apply(map_status_code)
-            
-            df['parent_span_id'] = df['parent_span_id'].fillna('-1') # Ensure not NaN
-            df['operation'] = df['operation'].fillna('') + " (" + df['type'] + ")"
-            
-            df = df[[
-                'timestamp', 'trace_id', 'span_id', 'parent_span_id',
-                'start_time', 'end_time', 'duration',
-                'service_name', 'operation', 'status_code'
-            ]]
         else:
             raise ValueError(f"Unknown dataset type: {dataset}")
         
@@ -194,15 +158,7 @@ def process_traces(dir, save_dir, dataset, timezone):
         )
         spans_df_temp.drop(columns=['span_id_y'], inplace=True)
         spans_df_temp.rename(columns={'span_id_x': 'span_id'}, inplace=True)
-        
-        if dataset == 'OpenRCA-Telecom':
-            # Inject osb_001 as virtual parent of os_021 and os_022
-            mask_osb_root = (
-                (spans_df_temp['parent_span_id'] == '-1') &
-                (spans_df_temp['service_name'].isin(['os_021', 'os_022'])) &
-                (spans_df_temp['operation'].str.contains('osb_001') & spans_df_temp['operation'].str.contains('CSF'))
-            )
-            spans_df_temp.loc[mask_osb_root, 'parent_name'] = 'osb_001'
+
         return spans_df_temp
 
     logger.info("Processing traces")
@@ -235,7 +191,7 @@ def process_logs(dir, save_dir, dataset, timezone):
     Args:
         dir (str): Root directory containing raw log CSV files.
         save_dir (str): Destination directory for processed artifacts.
-        dataset (str): Dataset name, one of GAIA or OpenRCA-Market; Telecom has no logs.
+        dataset (str): Dataset name, one of GAIA or OpenRCA-Market.
         timezone (str): Timezone used to convert GAIA embedded timestamps to epoch ms.
 
     Returns:
@@ -248,10 +204,6 @@ def process_logs(dir, save_dir, dataset, timezone):
         if "OpenRCA-Market" in dataset:
             log_files = glob.glob(os.path.join(dir, "*"))
             logger.info(f"Found {len(log_files)} log files in {dir}")
-        if "OpenRCA-Telecom" == dataset:
-            # No log files exist. Return empty list
-            log_files = []
-        
         return log_files
     
     def standardize_log_df(df: pd.DataFrame, dataset: str) -> pd.DataFrame:
@@ -480,70 +432,12 @@ def process_metrics_Market(dir, save_dir, oracle_kpis):
 
     return metric_df
 
-def process_metrics_Telecom(dir, save_dir, oracle_kpis):
-    """
-    Merge OpenRCA-Telecom metric files into one parquet filtered by oracle KPIs.
-
-    Args:
-        dir (str): Root directory containing OpenRCA-Telecom metric CSVs.
-        save_dir (str): Destination directory for processed artifacts.
-        oracle_kpis (List[str]): KPIs to retain when building the long-form table.
-
-    Returns:
-        pd.DataFrame: Long-form metrics with entity, metric, timestamp, value.
-    """
-    logger.info(f"Reading all metrics from directory {dir}")
-    save_file = os.path.join(save_dir, "metric.parquet")
-    
-    metric_files = glob.glob(os.path.join(dir, "*"))
-    
-    all_rows = []
-    for file_path in tqdm(metric_files, desc="Loading metric CSVs"):
-        if file_path.endswith("metric_app.csv"):
-            df = pd.read_csv(file_path)
-            
-            metric_cols = ['avg_time', 'num', 'succee_num', 'succee_rate']
-            metric_cols_filtered = [metric for metric in metric_cols if metric in oracle_kpis]
-            
-            for _, row in df.iterrows():
-                for col in metric_cols_filtered:
-                    all_rows.append({
-                        'entity': row['serviceName'],
-                        'metric': col,
-                        'timestamp': row['timestamp'],
-                        'value': row[col]
-                        
-                    })
-        else:
-            df = pd.read_csv(file_path)
-            df = df[df['name'].isin(oracle_kpis)]
-            
-            # Timestamps already in ms, no conversion necessary
-            
-            for _, row in df.iterrows():
-                all_rows.append({
-                    'entity': row['cmdb_id'],
-                    'metric': row['name'],
-                    'timestamp': row['timestamp'],
-                    'value': row['value']
-                })
-    
-    # Convert to DataFrame and sort
-    metric_df = pd.DataFrame(all_rows)
-    metric_df = metric_df.sort_values(by=['entity', 'metric', 'timestamp']).reset_index(drop=True)
-
-    logger.info("Saving results...")
-    metric_df.to_parquet(save_file, index=False)
-    logger.info(f"Saved processed metrics to {save_file}")
-
-    return metric_df
-
 def process_metrics(dataset, dir, save_dir, oracle_kpis) -> pd.DataFrame:
     """
     Dispatch to dataset-specific metric processors and return the resulting DataFrame.
 
     Args:
-        dataset (str): Dataset key used to select GAIA, OpenRCA-Market*, or OpenRCA-Telecom.
+        dataset (str): Dataset key used to select GAIA or OpenRCA-Market*.
         dir (str): Root directory containing raw metric files.
         save_dir (str): Destination directory for processed parquet.
         oracle_kpis (List[str]): KPI names to retain where applicable.
@@ -555,8 +449,6 @@ def process_metrics(dataset, dir, save_dir, oracle_kpis) -> pd.DataFrame:
         metrics_df = process_metrics_GAIA(dir, save_dir)
     elif "OpenRCA-Market" in dataset:
         metrics_df = process_metrics_Market(dir, save_dir, oracle_kpis)
-    elif "OpenRCA-Telecom" == dataset:
-        metrics_df = process_metrics_Telecom(dir, save_dir, oracle_kpis)
     return metrics_df
 
 def compute_pre_post_fault_windows(label_df: pd.DataFrame) -> pd.DataFrame:
@@ -693,7 +585,7 @@ def main():
     """
     parser = argparse.ArgumentParser(description="Pre-processes logs, metrics, and traces into pre- and post-failure segments.")
     parser.add_argument("--config", type=str, default="code/extractor/config.yaml", help="Path to config file.")
-    parser.add_argument("--dataset", type=str, default="OpenRCA-Telecom", help="Dataset to process.")
+    parser.add_argument("--dataset", type=str, default="GAIA", help="Dataset to process.")
     args = parser.parse_args()
     
     config = io_util.load_config(args.config)
@@ -777,7 +669,7 @@ def main():
     if dataset == 'GAIA':
         label_df['fault_st_time'] = label_df['fault_st_time'].apply(lambda x: convert_datetime_to_epoch(str(x), timezone))
         label_df['fault_ed_time'] = label_df['fault_ed_time'].apply(lambda x: convert_datetime_to_epoch(str(x), timezone))
-    elif ("OpenRCA-Market" in dataset) or ("OpenRCA-Telecom" == dataset):
+    elif ("OpenRCA-Market" in dataset):
         # Convert timestamps and durations to ms
         label_df['fault_st_time'] = label_df['fault_st_time'].apply(lambda x: int(x) * 1000)
         label_df['fault_ed_time'] = label_df['fault_ed_time'].apply(lambda x: int(x) * 1000)

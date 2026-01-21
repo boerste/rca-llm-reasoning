@@ -55,8 +55,6 @@ def extract_metric_alerts(component: str, kpi_df: dict, metric_detector: dict, d
                     entity, host = splits[1], splits[0] 
                 else:
                     entity, host = component, None
-            elif "OpenRCA-Telecom" == dataset:
-                entity, host = component, None
             else:
                 entity, host = None, None
                 

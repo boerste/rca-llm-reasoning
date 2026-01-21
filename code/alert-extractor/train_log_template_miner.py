@@ -7,7 +7,7 @@ Purpose:
 
 Prerequisites:
 - gt-file points to the label.csv produced by the dataset prep script
-    (prep_GAIA_dataset.py, prep_OpenRCA_Market_dataset.py, or prep_OpenRCA_Telecom_dataset.py). 
+    (prep_GAIA_dataset.py, prep_OpenRCA_Market_dataset.py). 
     If run-table is present, labels are indexed by orig_fault_id.
 - processed-data/post-fault-data exists (built by extract_pre_and_post_fault_telemetry.py)
 - fault-alert-data/log directory exists and is writable (output location)

@@ -12,7 +12,7 @@ Prerequisites:
     or normal-period is set in config.yaml to define a baseline window; optionally
     processed-data/normal-data may already exist
 - gt-file points to the label.csv produced by the dataset prep script
-    (prep_GAIA_dataset.py, prep_OpenRCA_Market_dataset.py, or prep_OpenRCA_Telecom_dataset.py);
+    (prep_GAIA_dataset.py, prep_OpenRCA_Market_dataset.py);
     if run-table is present, labels are indexed by orig_fault_id
 - processed-data directory exists and is writable; detector artifacts are saved under processed-data/detector
 
