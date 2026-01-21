@@ -10,7 +10,7 @@ print_usage() {
     echo "     -h, --help         display this usage information and exit"
     echo "     --micromamba       install micromamba (re-open the terminal after the installation)"
     echo "     --env-name=<NAME>  create the environment <NAME> (default: llama-env) with channels and Python 3.12"
-    echo "     --deps             install PyTorch, CUDA 12.4, transformers, ipykernel, etc. into the environment"
+    echo "     --deps             install PyTorch, CUDA 12.4, langgraph, ipykernel, etc. into the environment"
     echo "     --yes              use micromamba install --yes --quiet"
     echo ""
 }
@@ -72,13 +72,13 @@ LLAMA_ENV_PREFIX=${MAMBA_ROOT_PREFIX}/envs/${ENV_NAME}/
 
 if [[ $ARG_DEPS == "true" ]]; then
     ${MAMBA_EXE} -n "${ENV_NAME}" install ${ARG_YES} \
-        pytorch torchaudio pytorch-cuda==12.4 cuda==12.4 \
-        transformers datasets evaluate accelerate huggingface_hub \
+        pytorch pytorch-cuda==12.4 cuda==12.4 \
+        transformers evaluate accelerate pandas tqdm networkx numpy scikit-learn \
         ipykernel ipywidgets \
         ${CHANNELS}
 
     # Install torchvision from pip because conda installs a CPU version and changes PyTorch to CPU as well
-    ${MAMBA_EXE} -n "${ENV_NAME}" run pip install torchvision
+    ${MAMBA_EXE} -n "${ENV_NAME}" run pip install torchvision drain3 langchain langchain-core langgraph langchain-ollama openai langchain-openai
 
     # Install the Jupyter Python kernel
     ${LLAMA_ENV_PREFIX}/bin/python -m ipykernel install --user --name "${ENV_NAME}" --display-name "${ENV_NAME}"
