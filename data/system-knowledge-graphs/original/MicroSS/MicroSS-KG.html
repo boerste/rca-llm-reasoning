@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1000px;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "lightblue", "font": {"size": 18}, "id": "frontend", "label": "frontend", "shape": "dot"}, {"color": "lightblue", "font": {"size": 18}, "id": "webservice", "label": "webservice", "shape": "dot"}, {"color": "mediumorchid", "font": {"size": 18}, "id": "zookeeper", "label": "zookeeper", "shape": "dot"}, {"color": "lightgreen", "font": {"size": 18}, "id": "host1", "label": "host1", "shape": "dot"}, {"color": "orange", "font": {"size": 18}, "id": "webservice1", "label": "webservice1", "shape": "dot"}, {"color": "orange", "font": {"size": 18}, "id": "redisservice1", "label": "redisservice1", "shape": "dot"}, {"color": "orange", "font": {"size": 18}, "id": "mobservice1", "label": "mobservice1", "shape": "dot"}, {"color": "lightgreen", "font": {"size": 18}, "id": "host2", "label": "host2", "shape": "dot"}, {"color": "yellow", "font": {"size": 18}, "id": "redis", "label": "redis", "shape": "dot"}, {"color": "orange", "font": {"size": 18}, "id": "webservice2", "label": "webservice2", "shape": "dot"}, {"color": "orange", "font": {"size": 18}, "id": "loginservice1", "label": "loginservice1", "shape": "dot"}, {"color": "lightgreen", "font": {"size": 18}, "id": "host3", "label": "host3", "shape": "dot"}, {"color": "orange", "font": {"size": 18}, "id": "redisservice2", "label": "redisservice2", "shape": "dot"}, {"color": "orange", "font": {"size": 18}, "id": "loginservice2", "label": "loginservice2", "shape": "dot"}, {"color": "orange", "font": {"size": 18}, "id": "dbservice2", "label": "dbservice2", "shape": "dot"}, {"color": "lightgreen", "font": {"size": 18}, "id": "host4", "label": "host4", "shape": "dot"}, {"color": "orange", "font": {"size": 18}, "id": "mobservice2", "label": "mobservice2", "shape": "dot"}, {"color": "orange", "font": {"size": 18}, "id": "dbservice1", "label": "dbservice1", "shape": "dot"}, {"color": "lightgreen", "font": {"size": 18}, "id": "host5", "label": "host5", "shape": "dot"}, {"color": "pink", "font": {"size": 18}, "id": "mysql", "label": "mysql", "shape": "dot"}, {"color": "lightblue", "font": {"size": 18}, "id": "mobservice", "label": "mobservice", "shape": "dot"}, {"color": "lightblue", "font": {"size": 18}, "id": "loginservice", "label": "loginservice", "shape": "dot"}, {"color": "lightblue", "font": {"size": 18}, "id": "redisservice", "label": "redisservice", "shape": "dot"}, {"color": "lightblue", "font": {"size": 18}, "id": "dbservice", "label": "dbservice", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "frontend", "label": "control_flow", "to": "webservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "frontend", "label": "registers_with", "to": "zookeeper"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host1", "label": "hosts", "to": "zookeeper"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host1", "label": "hosts", "to": "webservice1"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host1", "label": "hosts", "to": "redisservice1"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host1", "label": "hosts", "to": "mobservice1"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host2", "label": "hosts", "to": "redis"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host2", "label": "hosts", "to": "webservice2"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host2", "label": "hosts", "to": "loginservice1"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host3", "label": "hosts", "to": "redisservice2"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host3", "label": "hosts", "to": "loginservice2"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host3", "label": "hosts", "to": "dbservice2"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host4", "label": "hosts", "to": "mobservice2"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host4", "label": "hosts", "to": "dbservice1"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "host5", "label": "hosts", "to": "mysql"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "webservice", "label": "control_flow", "to": "mobservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "webservice", "label": "control_flow", "to": "loginservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "webservice", "label": "control_flow", "to": "redisservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "webservice", "label": "registers_with", "to": "zookeeper"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "webservice", "label": "has_instance", "to": "webservice1"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "webservice", "label": "has_instance", "to": "webservice2"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "mobservice", "label": "control_flow", "to": "redisservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "mobservice", "label": "registers_with", "to": "zookeeper"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "mobservice", "label": "has_instance", "to": "mobservice1"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "mobservice", "label": "has_instance", "to": "mobservice2"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "loginservice", "label": "control_flow", "to": "redisservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "loginservice", "label": "control_flow", "to": "dbservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "loginservice", "label": "control_flow", "to": "loginservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "loginservice", "label": "registers_with", "to": "zookeeper"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "loginservice", "label": "has_instance", "to": "loginservice1"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "loginservice", "label": "has_instance", "to": "loginservice2"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "dbservice", "label": "control_flow", "to": "redisservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "dbservice", "label": "data_flow", "to": "mysql"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "dbservice", "label": "registers_with", "to": "zookeeper"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "dbservice", "label": "has_instance", "to": "dbservice1"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "dbservice", "label": "has_instance", "to": "dbservice2"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "redisservice", "label": "data_flow", "to": "redis"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "redisservice", "label": "registers_with", "to": "zookeeper"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "redisservice", "label": "has_instance", "to": "redisservice1"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "redisservice", "label": "has_instance", "to": "redisservice2"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "redis", "label": "hosted_on", "to": "host2"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "zookeeper", "label": "hosted_on", "to": "host1"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "zookeeper", "label": "discovers", "to": "frontend"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "zookeeper", "label": "discovers", "to": "webservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "zookeeper", "label": "discovers", "to": "mobservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "zookeeper", "label": "discovers", "to": "loginservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "zookeeper", "label": "discovers", "to": "dbservice"}, {"arrows": "to", "color": "gray", "dashes": false, "font": {"size": 16}, "from": "zookeeper", "label": "discovers", "to": "redisservice"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "mysql", "label": "hosted_on", "to": "host5"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "webservice1", "label": "hosted_on", "to": "host1"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "webservice1", "label": "instance_of", "to": "webservice"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "webservice2", "label": "hosted_on", "to": "host2"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "webservice2", "label": "instance_of", "to": "webservice"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "redisservice1", "label": "hosted_on", "to": "host1"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "redisservice1", "label": "instance_of", "to": "redisservice"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "redisservice2", "label": "hosted_on", "to": "host3"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "redisservice2", "label": "instance_of", "to": "redisservice"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "mobservice1", "label": "hosted_on", "to": "host1"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "mobservice1", "label": "instance_of", "to": "mobservice"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "mobservice2", "label": "hosted_on", "to": "host4"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "mobservice2", "label": "instance_of", "to": "mobservice"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "loginservice1", "label": "hosted_on", "to": "host2"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "loginservice1", "label": "instance_of", "to": "loginservice"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "loginservice2", "label": "hosted_on", "to": "host3"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "loginservice2", "label": "instance_of", "to": "loginservice"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "dbservice1", "label": "hosted_on", "to": "host4"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "dbservice1", "label": "instance_of", "to": "dbservice"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "dbservice2", "label": "hosted_on", "to": "host3"}, {"arrows": "to", "color": "gray", "dashes": true, "font": {"size": 16}, "from": "dbservice2", "label": "instance_of", "to": "dbservice"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -4000,
+            "springConstant": 0.001,
+            "springLength": 125
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
