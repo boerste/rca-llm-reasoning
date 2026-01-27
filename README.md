@@ -1,15 +1,21 @@
-# Grounded or Guessing? An Empirical Evaluation of LLM Reasoning in Agentic Workflows for Root Cause Analysis in Cloud-based Systems
+# Stalled, Biased, and Confused: Uncovering Reasoning Failures in LLMs for Cloud-Based Root Cause Analysis
 
-![Python Version](https://img.shields.io/badge/python-3.12%2B-blue)&ensp;
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)&ensp;
+![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)&ensp;
+[![License: MIT](https://img.shields.io/badge/License-MIT-708090.svg)](https://opensource.org/licenses/MIT)&ensp;
+[![Paper](https://img.shields.io/badge/Paper-FORGE_2026-00629B)](https://doi.org/10.1145/3793655.3793732)&ensp;
+[![Thesis](https://img.shields.io/badge/Thesis-University_of_Waterloo-FFD54F)](https://hdl.handle.net/10012/22841)
 
 > 📣 **Our paper has been accepted to FORGE 2026!**
 
-We contribute a systematic evaluation framework designed to isolate and assess the diagnostic reasoning capabilities of Large Language Models (LLMs) for Root Cause Analysis (RCA).
+*This project is also detailed in a Master's Thesis: [Grounded or Guessing? An Empirical Evaluation of LLM Reasoning in Agentic Workflows for Root Cause Analysis in Cloud-based Systems](https://hdl.handle.net/10012/22841).*
+
+We contribute a systematic evaluation framework designed to isolate and assess the diagnostic reasoning capabilities of Large Language Models (LLMs) for Root Cause Analysis (RCA) in cloud-based systems.
 
 While LLMs are increasingly adopted for RCA, current approaches often embed them within complex, multi-agent workflows. This entanglement makes it difficult to assess individual agent contributions, obscuring whether a correct diagnosis results from genuine reasoning or auxiliary task heuristics.
 
 We address this by providing a controlled RCA setting that isolates the LLM from confounding factors (e.g., noisy telemetry, inter-agent chatter). By employing simple agent architectures, deterministic tools, and explicit typed knowledge graphs, this framework foregrounds reasoning behavior, allowing for the targeted analysis of both final outputs and intermediate reasoning traces.
+
+Additionally, we produce a labeled taxonomy of 16 common RCA reasoning failures and a LLM-as-a-Judge setup for annotation. 
 
 <div align="center"> <img src="./.assets/method-overview.png" alt="Method Overview" width="800"/> </div>
 
@@ -60,11 +66,22 @@ And Ollama models:
 If you use our work in your research, please cite our paper:
 
 ```bibtex
-@inproceedings{
-    riddell2026,
-    title={{Grounded Or Guessing? An Empirical Evaluation of LLM Reasoning in Agentic Workflows for Root Cause Analysis in Cloud-based Systems}},
+@inproceedings{riddell2026forge,
+    title={{Stalled, Biased, and Confused: Uncovering Reasoning Failures in LLMs for Cloud-Based Root Cause Analysis}},
     author={Evelien Riddell and James Riddell and Gengyi Sun and Michal Antkiewicz and Krzysztof Czarnecki},
-    booktitle={The ACM International Conference on AI Foundation Models and Software Engineering (FORGE)},
-    year={2026}
+    booktitle={IEEE/ACM Third International Conference on AI Foundation Models and Software Engineering (FORGE)},
+    year={2026},
+    doi={10.1145/3793655.3793732}
+}
+```
+
+For additional backgound, problem definition, and expanded discussion, please refer to the Master's thesis:
+```bibtex
+@mastersthesis{riddell2026thesis,
+    author = {Evelien Riddell},
+    title = {{Grounded or Guessing? An Empirical Evaluation of LLM Reasoning in Agentic Workflows for Root Cause Analysis in Cloud-based Systems}},
+    school = {{University of Waterloo}},
+    year = {2026},
+    url = {https://hdl.handle.net/10012/22841}
 }
 ```
