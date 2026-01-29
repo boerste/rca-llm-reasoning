@@ -87,7 +87,7 @@ cd rca-llm-reasoning
 pixi install
 
 # Start ollama
-pixi run ollama
+pixi run ollama serve
 
 # Open another terminal
 
