@@ -73,10 +73,12 @@ Located at [`results/v4/evaluation/llm-judge/`](./results/v4/evaluation/llm-judg
 Use the following commands:
 
 Install `pixi` according to https://pixi.prefix.dev/latest/installation/
+Tested with `pixi 0.63.2`.
 ```bash
 curl -fsSL https://pixi.sh/install.sh | sh
 ```
-Re-open the terminal to make `pixi` available.
+Re-open the terminal to make `pixi` command available.
+Execute all `pixi` commands inside the root folder of the repository (i.e., `rca-llm-reasoning`).
 
 ```bash
 # Clone the repository
@@ -87,6 +89,7 @@ cd rca-llm-reasoning
 pixi run ollama serve
 
 # In another terminal
+cd rca-llm-reasoning
 
 # Pull ollama models
 pixi run pull_llama3-2-3b
