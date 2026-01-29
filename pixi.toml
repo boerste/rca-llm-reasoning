@@ -9,8 +9,14 @@ version = "0.1.0"
 cuda = "12.4"
 
 [tasks]
+ollama = "ollama serve"
 rca = "python code/rca.py"
 ui = "python code/gradio-apps/gradio-messages-agent.py"
+pull_llama3-2-3b = "ollama pull llama3.2:3b"
+pull_qwen3-4b = "ollama pull qwen3:4b"
+pull_qwen3-32b = "ollama pull qwen3:32b"
+pull_llama3-3 = "ollama pull llama3.3"
+pull_command-r-plus = "ollama pull command-r-plus"
 
 [dependencies]
 python = "3.12.*"

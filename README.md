@@ -84,28 +84,34 @@ git clone https://github.com/boerste/rca-llm-reasoning.git
 cd rca-llm-reasoning
 
 # Install and activate conda environment
-pixi shell
+pixi install
 
 # Start ollama
-ollama serve &
+pixi run ollama
+
+# Open another terminal
 
 # Pull ollama models
-ollama pull llama3.2:3b
-ollama pull qwen3:4b
-ollama pull qwen3:32b
-ollama pull llama3.3
-ollama pull command-r-plus
-
+pixi run pull_llama3-2-3b
 # Test a model
-ollama run llama3.2:3b
+pixi run ollama run llama3.2:3b
+
+pixi run pull_qwen3-4b
+pixi run pull_qwen3-32b
+pixi run pull_llama3-3
+pixi run pull_command-r-plus
 ```
-Exit the shell by pressing `<ctrl>+d` or `exit`.
 
 Start gradio user interface:
-```
+```bash
 pixi run ui
 ```
 and open `http://127.0.0.1:7860`.
+
+Execute in batch mode:
+```
+pixi run rca
+```
 
 ### Dependencies
 
