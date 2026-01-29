@@ -15,7 +15,7 @@ Alert Extraction turns raw telemetry and injected-fault labels into compact metr
     - Train Drain3 template miner for logs with [train_log_template_miner.py](train_log_template_miner.py).
 5. **Alert generation**: produce final metric, trace, and log alerts with [alert_extractor.py](alert_extractor.py).
 
-**Note: Steps 2–5 above are automated by [extract_alerts.sh](../../extract_alerts.sh).**
+**Note: Steps 2–5 above are automated by [extract_alerts.sh](./extract_alerts.sh).**
 
 The [config.yaml](config.yaml) file contains the per-dataset config for alert extraction. The key parameters are:
 - `telemetry-data`: path to the raw dataset
