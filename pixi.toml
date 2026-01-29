@@ -6,7 +6,7 @@ platforms = ["linux-64"]
 version = "0.1.0"
 
 [system-requirements]
-cuda = "12.6"
+cuda = "12.9"
 [tasks]
 rca = "python code/rca.py"
 ui = "python code/gradio-apps/gradio-messages-agent.py"
@@ -20,7 +20,7 @@ pull_command-r-plus = "ollama pull command-r-plus"
 python = "3.12.*"
 pytorch-gpu = "*"
 torchvision = "*"
-cuda = "12.6.*"
+cuda = "12.9.*"
 ollama = "==0.11.4"
 transformers = "*"
 evaluate = "*"
