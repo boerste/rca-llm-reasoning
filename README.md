@@ -83,17 +83,14 @@ Re-open the terminal to make `pixi` available.
 git clone https://github.com/boerste/rca-llm-reasoning.git
 cd rca-llm-reasoning
 
-# Install and activate conda environment
-pixi install
-
-# Start ollama
+# In one terminal, start ollama
 pixi run ollama serve
 
-# Open another terminal
+# In another terminal
 
 # Pull ollama models
 pixi run pull_llama3-2-3b
-# Test a model
+# Test a model to verify that it runs on the GPU
 pixi run ollama run llama3.2:3b
 
 pixi run pull_qwen3-4b
@@ -109,7 +106,7 @@ pixi run ui
 and open `http://127.0.0.1:7860`.
 
 Execute in batch mode:
-```
+```bash
 pixi run rca
 ```
 
@@ -121,6 +118,17 @@ For our experiments, we used the following versions:
 - `langchain-core == 0.3.74`
 - `langchain-ollama == 0.3.6`
 - `langgraph == 0.6.4`
+
+The environment `default` uses more recent versions of the dependencies, whereas 
+the environment `reproduction` matches the above versions more closely, except:
+* `CUDA` 12.9 instead of 12.4
+* `langchain-core` 0.3.76 instead of 0.3.74
+* `langchain-ollama` 0.3.8 instead of 0.3.6
+
+To run in this environment, provide the parameter `-e reproduction` to `pixi run` commands.
+* `pixi run -e reproduction ollama serve`
+* `pixi run -e reproduction rca`
+* `pixi run -e reproduction ui`
 
 Ollama models:
 - [`llama3.2:3b`: ID=a80c4f17acd5](https://ollama.com/library/llama3.2:3b)
