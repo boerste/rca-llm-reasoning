@@ -70,21 +70,24 @@ Located at [`results/v4/evaluation/llm-judge/`](./results/v4/evaluation/llm-judg
 
 ### Installation
 
-The [`install.bash`](./install.bash) script installs micromamba, a new environment, and all the dependencies required for this project. 
 Use the following commands:
+
+Install `pixi` according to https://pixi.prefix.dev/latest/installation/
+```bash
+curl -fsSL https://pixi.sh/install.sh | sh
+```
+Re-open the terminal to make `pixi` available.
 
 ```bash
 # Clone the repository
 git clone https://github.com/boerste/rca-llm-reasoning.git
 cd rca-llm-reasoning
 
-# Install and activate environment
-bash install.bash --micromamba # if not already installed
-bash install.bash --env-name=llm-rca --deps
-micromamba activate llm-rca
+# Install and activate conda environment
+pixi shell
 
-# Install ollama
-curl -fsSL https://ollama.com/install.sh | sh
+# Start ollama
+ollama serve &
 
 # Pull ollama models
 ollama pull llama3.2:3b
