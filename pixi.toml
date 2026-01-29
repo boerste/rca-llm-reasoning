@@ -9,6 +9,8 @@ version = "0.1.0"
 cuda = "12.4"
 
 [tasks]
+rca = "python code/rca.py"
+ui = "python code/gradio-apps/gradio-messages-agent.py"
 
 [dependencies]
 python = "3.12.*"
@@ -32,6 +34,8 @@ langchain-ollama = "==0.3.8"
 langgraph = "==0.6.4"
 openai = "*"
 langchain-openai = "*"
+gradio = "*"
+pytz = "*"
 
 [pypi-dependencies]
 drain3 = "*"

@@ -95,7 +95,17 @@ ollama pull qwen3:4b
 ollama pull qwen3:32b
 ollama pull llama3.3
 ollama pull command-r-plus
+
+# Test a model
+ollama run llama3.2:3b
 ```
+Exit the shell by pressing `<ctrl>+d` or `exit`.
+
+Start gradio user interface:
+```
+pixi run ui
+```
+and open `http://127.0.0.1:7860`.
 
 ### Dependencies
 
