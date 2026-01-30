@@ -1,0 +1,68 @@
+[workspace]
+authors = ["Michal Antkiewicz <michal.antkiewicz@uwaterloo.ca>"]
+channels = ["conda-forge"]
+name = "rca-llm-reasoning"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[system-requirements]
+cuda = "12.9"
+[tasks]
+rca = "python code/rca.py"
+ui = "python code/gradio-apps/gradio-messages-agent.py"
+extract_alerts = "cd code/alert-extractor/ && bash extract_alerts.sh"
+pull_llama3-2-3b = "ollama pull llama3.2:3b"
+pull_qwen3-4b = "ollama pull qwen3:4b"
+pull_qwen3-32b = "ollama pull qwen3:32b"
+pull_llama3-3 = "ollama pull llama3.3"
+pull_command-r-plus = "ollama pull command-r-plus"
+
+[dependencies]
+python = "3.12.*"
+pytorch-gpu = "*"
+# torchvision = "*"
+cuda = "*"
+ollama = "*"
+transformers = "*"
+evaluate = "*"
+accelerate = "*"
+pandas = "*"
+tqdm = "*"
+networkx = "*"
+numpy = "*"
+scikit-learn = "*"
+ipykernel = "*"
+ipywidgets = "*"
+pixi-kernel = "*"
+langchain = "*"
+langchain-core = "*"
+langchain-ollama = "*"
+langgraph = "*"
+openai = "*"
+langchain-openai = "*"
+gradio = "*"
+pytz = "*"
+
+[pypi-dependencies]
+drain3 = "*"
+
+[environments]
+reproduction = { features = ["reproduction"] }
+
+[feature.reproduction.dependencies]
+cuda = "12.9.*"
+pytorch-gpu = "==2.5.1"
+ollama = "==0.11.4"
+transformers = "==4.46.2"
+evaluate = "==0.4.1"
+accelerate = "==1.1.1"
+pandas = "==2.2.3"
+tqdm = "==4.67.0"
+networkx = "==3.4.2"
+numpy = "==1.26.4"
+scikit-learn = "==1.5.2"
+langchain = "==0.3.27"
+langchain-core = "==0.3.76"
+langchain-ollama = "==0.3.8"
+langgraph = "==0.6.4"
+gradio = "==5.32.0"

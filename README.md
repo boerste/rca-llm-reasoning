@@ -70,28 +70,55 @@ Located at [`results/v4/evaluation/llm-judge/`](./results/v4/evaluation/llm-judg
 
 ### Installation
 
-The [`install.bash`](./install.bash) script installs micromamba, a new environment, and all the dependencies required for this project. 
 Use the following commands:
+
+Install `pixi` according to https://pixi.prefix.dev/latest/installation/
+Tested with `pixi 0.63.2`.
+```bash
+curl -fsSL https://pixi.sh/install.sh | sh
+```
+Re-open the terminal to make `pixi` command available.
+Execute all `pixi` commands inside the root folder of the repository (i.e., `rca-llm-reasoning`).
 
 ```bash
 # Clone the repository
 git clone https://github.com/boerste/rca-llm-reasoning.git
 cd rca-llm-reasoning
 
-# Install and activate environment
-bash install.bash --micromamba # if not already installed
-bash install.bash --env-name=llm-rca --deps
-micromamba activate llm-rca
+# In one terminal, start ollama
+pixi run ollama serve
 
-# Install ollama
-curl -fsSL https://ollama.com/install.sh | sh
+# In another terminal
+cd rca-llm-reasoning
 
 # Pull ollama models
-ollama pull llama3.2:3b
-ollama pull qwen3:4b
-ollama pull qwen3:32b
-ollama pull llama3.3
-ollama pull command-r-plus
+pixi run pull_llama3-2-3b
+# Test a model to verify that it runs on the GPU
+pixi run ollama run llama3.2:3b
+
+pixi run pull_qwen3-4b
+pixi run pull_qwen3-32b
+pixi run pull_llama3-3
+pixi run pull_command-r-plus
+```
+
+Start gradio user interface:
+```bash
+pixi run ui
+```
+and open `http://127.0.0.1:7860`.
+
+Execute in batch mode:
+```bash
+pixi run rca
+```
+
+### Alert extraction
+
+The repository contains extracted alerts in `data/fault-alerts`. 
+This data can be reproduced using
+```bash
+pixi run extract_alerts
 ```
 
 ### Dependencies
@@ -102,6 +129,17 @@ For our experiments, we used the following versions:
 - `langchain-core == 0.3.74`
 - `langchain-ollama == 0.3.6`
 - `langgraph == 0.6.4`
+
+The environment `default` uses more recent versions of the dependencies, whereas 
+the environment `reproduction` matches the above versions more closely, except:
+* `CUDA` 12.9 instead of 12.4
+* `langchain-core` 0.3.76 instead of 0.3.74
+* `langchain-ollama` 0.3.8 instead of 0.3.6
+
+To run in this environment, provide the parameter `-e reproduction` to `pixi run` commands.
+* `pixi run -e reproduction ollama serve`
+* `pixi run -e reproduction rca`
+* `pixi run -e reproduction ui`
 
 Ollama models:
 - [`llama3.2:3b`: ID=a80c4f17acd5](https://ollama.com/library/llama3.2:3b)
