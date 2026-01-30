@@ -113,6 +113,14 @@ Execute in batch mode:
 pixi run rca
 ```
 
+### Alert extraction
+
+The repository contains extracted alerts in `data/fault-alerts`. 
+This data can be reproduced using
+```bash
+pixi run extract_alerts
+```
+
 ### Dependencies
 
 For our experiments, we used the following versions:
